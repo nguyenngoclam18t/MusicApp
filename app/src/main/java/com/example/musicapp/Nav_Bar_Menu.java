@@ -21,7 +21,7 @@ public class Nav_Bar_Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_bar_menu);
-        loadFragment(new HomePageFragment());
+        //loadFragment(new HomePageFragment());
         //checkout
         Get();
 
@@ -43,21 +43,21 @@ public class Nav_Bar_Menu extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.navigation_homepage) {
-                    loadFragment(new HomePageFragment());
+                    //loadFragment(new HomePageFragment());
                     // Load Shop fragment or perform other actions
                     return true;
                 } else if (id == R.id.navigation_top) {
-                    loadFragment(new HomePageFragment());
+                    //loadFragment(new HomePageFragment());
 
                     // Load Top fragment or perform other actions
                     return true;
                 } else if (id == R.id.navigation_genres) {
-                    loadFragment(new HomePageFragment());
+                    //loadFragment(new HomePageFragment());
 
                     // Load Cart fragment or perform other actions
                     return true;
                 } else if (id == R.id.navigation_Profile) {
-                    loadFragment(new HomePageFragment());
+                    //loadFragment(new HomePageFragment());
 
                     // Load Profile fragment or perform other actions
                     return true;
