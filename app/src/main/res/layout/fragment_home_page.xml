@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomePage">
+    tools:context=".HomePageFragment">
 
     <FrameLayout
         android:padding="10dp"
@@ -33,24 +33,34 @@
                         android:background="#00C38F8F"
                         android:scaleType="centerCrop"
                         android:contentDescription="Icon for Homepage"
-                        android:src="@drawable/searchIco" />
+                        android:src="@drawable/logohome" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
                     <ImageButton
                         android:id="@+id/SearchIconHomePage"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_gravity="right"
                         android:background="#00C38F8F"
                         android:contentDescription="Icon for searching"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/searchIco" />
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/searchbaricon" />
+
+                    <ImageButton
+                        android:id="@+id/NotificationIconHomePage"
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:background="#00C38F8F"
+                        android:contentDescription="Icon for searching"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/thongbao" />
                 </LinearLayout>
 
             </LinearLayout>

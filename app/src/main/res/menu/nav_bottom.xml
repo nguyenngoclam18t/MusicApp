@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_shop"
+        android:id="@+id/navigation_homepage"
         android:icon="@drawable/home"
-        android:title="homepage"
+        android:title="Trang Chủ"
         />
     <item
-        android:id="@+id/navigation_gifts"
-        android:icon="@drawable/home"
-        android:title="homepage"
+        android:id="@+id/navigation_top"
+        android:icon="@drawable/topgenres"
+        android:title="Xếp Hạng"
         />
     <item
-        android:id="@+id/navigation_carts"
-        android:icon="@drawable/home"
-        android:title="homepage"
+        android:id="@+id/navigation_genres"
+        android:icon="@drawable/genresicon"
+        android:title="Thể Loại"
         />
     <item
         android:id="@+id/navigation_Profile"
-        android:icon="@drawable/home"
-        android:title="homepage"
+        android:icon="@drawable/profileicon"
+        android:title="Tôi"
         />
 </menu>
