@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomePageFragment">
+
+    <FrameLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/HomePageIcon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="#00C38F8F"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Icon for Homepage"
+                        android:src="@drawable/logohome" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/SearchIconHomePage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="#00C38F8F"
+                        android:contentDescription="Icon for searching"
+                        android:scaleType="centerCrop"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/searchbaricon" />
+
+                    <ImageButton
+                        android:id="@+id/NotificationIconHomePage"
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:background="#00C38F8F"
+                        android:contentDescription="Icon for searching"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/thongbao" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+</ScrollView>
