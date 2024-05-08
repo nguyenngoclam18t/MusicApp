@@ -7,12 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-public class HomePage extends AppCompatActivity {
+public class Nav_Bar_Menu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_nav_bar_menu);
     }
     void loadFragment(Fragment fragment){
         FragmentManager fm=getSupportFragmentManager();
