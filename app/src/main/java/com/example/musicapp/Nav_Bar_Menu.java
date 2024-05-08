@@ -22,6 +22,7 @@ public class Nav_Bar_Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_bar_menu);
         loadFragment(new HomePageFragment());
+        //checkout
         Get();
 
     }
