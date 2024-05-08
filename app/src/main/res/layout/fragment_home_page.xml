@@ -59,18 +59,20 @@
 
                     <ImageButton
                         android:id="@+id/SearchIconHomePage"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="10dp"
                         android:background="#00C38F8F"
+                        android:layout_gravity="center"
                         android:contentDescription="Icon for searching"
                         android:scaleType="centerCrop"
-                        android:layout_marginRight="10dp"
                         android:src="@drawable/searchbaricon" />
 
                     <ImageButton
                         android:id="@+id/NotificationIconHomePage"
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
                         android:background="#00C38F8F"
                         android:contentDescription="Icon for searching"
                         android:scaleType="centerCrop"
