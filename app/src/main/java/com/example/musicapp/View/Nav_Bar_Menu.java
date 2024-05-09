@@ -1,4 +1,4 @@
-package com.example.musicapp.Activities;
+package com.example.musicapp.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
