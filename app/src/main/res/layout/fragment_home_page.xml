@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".View.HomePageFragment">
 
     <FrameLayout
@@ -114,6 +115,33 @@
                 android:clipToPadding="false"
                 android:orientation="horizontal" />
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="Nổi bật ngày hôm nay" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="20dp"
+                android:clipToOutline="false"
+                android:elevation="20dp"
+                app:cardBackgroundColor="#BB9DEC">
+                    <com.denzcoskun.imageslider.ImageSlider
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/imgSliderHomePage"
+                        app:iss_auto_cycle="true"
+                        app:iss_period="1000"
+                        app:iss_delay="1000"
+                        app:iss_corner_radius="20"
+                        />
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
     </FrameLayout>

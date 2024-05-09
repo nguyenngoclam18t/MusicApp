@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.musicapp.Controller.NewsTodayAdapter;
 import com.example.musicapp.Model.Singer;
 import com.example.musicapp.R;
@@ -30,6 +33,7 @@ public class HomePageFragment extends Fragment {
     //my varible
     RecyclerView recyclerViewNewsToday;
     RecyclerView.Adapter adapterNewsToday;
+    ImageSlider imageSlider;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -79,13 +83,26 @@ public class HomePageFragment extends Fragment {
         adapterNewsToday = new NewsTodayAdapter(arr);
         recyclerViewNewsToday.setAdapter(adapterNewsToday);
 
+
+    }
+    private  void effectSlider(){
+        // slider
+        ArrayList<SlideModel> arrSlider =new ArrayList<>();
+        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
+        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
+        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
+        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
+        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
+        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
+        imageSlider.setImageList(arrSlider,ScaleTypes.CENTER_CROP);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-
+        imageSlider=(ImageSlider)view.findViewById(R.id.imgSliderHomePage);
+        effectSlider();
         recyclerViewNewsToday=(RecyclerView) view.findViewById(R.id.RecyclerViewNewsToday);
         SetEffect();
         return view;
