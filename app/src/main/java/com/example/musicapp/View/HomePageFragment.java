@@ -1,4 +1,4 @@
-package com.example.musicapp.Fragments;
+package com.example.musicapp.View;
 
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.example.musicapp.Adapters;
+package com.example.musicapp.Controller;
 
 import android.view.View;
 import android.view.ViewGroup;
