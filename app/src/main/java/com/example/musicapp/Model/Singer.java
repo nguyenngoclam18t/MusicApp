@@ -2,12 +2,22 @@ package com.example.musicapp.Model;
 
 public class Singer {
     private  int Image;
-    private  String Name;
+    private  String Name,About;
 
-    public Singer( String name,int image) {
+
+    public Singer(String name, String about, int image) {
         Image = image;
         Name = name;
+        About=about;
     }
+    public String getAbout() {
+        return About;
+    }
+
+    public void setAbout(String about) {
+        About = about;
+    }
+
     public int getImage() {
         return Image;
     }
