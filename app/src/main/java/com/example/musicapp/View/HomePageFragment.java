@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.musicapp.Controller.FarvoriteSingerAdapter;
 import com.example.musicapp.Controller.NewsMusicAdapter;
 import com.example.musicapp.Controller.NewsTodayAdapter;
 import com.example.musicapp.Controller.TopMusicHomePageAdapter;
@@ -39,6 +40,7 @@ public class HomePageFragment extends Fragment {
     RecyclerView recyclerViewNewsToday;
     RecyclerView recyclerViewNewsMusic;
     RecyclerView recyclerViewTopMusic;
+    RecyclerView recyclerViewFavoriteSinger;
 
     ImageSlider imageSlider;
     ArrayList<Music> arrMusic = new ArrayList<>();
@@ -147,6 +149,12 @@ public class HomePageFragment extends Fragment {
         recyclerViewTopMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewTopMusic.setAdapter(adapterTop);
     }
+    private  void effectFavoriteSinger(){
+        RecyclerView.Adapter adapterFavoriteSinger;
+        adapterFavoriteSinger=new FarvoriteSingerAdapter(arrSinger);
+        recyclerViewFavoriteSinger.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewFavoriteSinger.setAdapter(adapterFavoriteSinger);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -156,11 +164,13 @@ public class HomePageFragment extends Fragment {
         recyclerViewNewsToday = (RecyclerView) view.findViewById(R.id.RecyclerViewNewsToday);
         recyclerViewNewsMusic = (RecyclerView) view.findViewById(R.id.RecyclerViewNewsMusic);
         recyclerViewTopMusic = (RecyclerView) view.findViewById(R.id.RecyclerViewTopMusic);
+        recyclerViewFavoriteSinger=(RecyclerView) view.findViewById(R.id.RecyclerViewFarvoriteSinger);
         effectSlider();
         effectNewsToday();
         effectSuggestSinger(view);
         effectNewsMusic();
         effectTopHomePage();
+        effectFavoriteSinger();
         return view;
     }
 }
