@@ -43,4 +43,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     //Thêm dependency của CircleImageView để hiển thị hình tròn
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
+
 }
