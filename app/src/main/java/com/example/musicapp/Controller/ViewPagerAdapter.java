@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Lifecycle;
 
 import com.example.musicapp.View.MusicFragment;
-import com.example.musicapp.View.PlaylistFragment;
+import com.example.musicapp.View.AlbumFragment;
 
 import java.util.ArrayList;
 

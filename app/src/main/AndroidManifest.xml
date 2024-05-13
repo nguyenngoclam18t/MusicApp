@@ -13,10 +13,10 @@
         android:theme="@style/Theme.MusicApp"
         tools:targetApi="31">
         <activity
-            android:name=".View.TestActivity"
+            android:name=".View.PlayerActivity"
             android:exported="false"/>
         <activity
-            android:name=".View.PlayerActivity"
+            android:name=".View.TestActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

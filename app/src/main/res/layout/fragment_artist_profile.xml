@@ -10,36 +10,25 @@
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/header_bg"
         android:layout_alignParentTop="true">
 
         <ImageButton
             android:id="@+id/btn_back"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/down_arrow"
+            android:src="@drawable/baseline_keyboard_arrow_left_24"
             android:background="@null"/>
-
-        <TextView
-            android:id="@+id/artist_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Artist"
-            android:textSize="30sp"
-            android:textColor="@color/font_color"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/header_layout">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/artist_img"
             android:src="@drawable/img"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header_layout">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -53,9 +42,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="23dp"
                 android:text="Artist"
+                android:textColor="@color/font_color"
                 android:textSize="40dp"
-                android:textColor="@color/font_color"/>
+                android:textStyle="bold"/>
 
             <Button
                 android:layout_width="110dp"
@@ -73,22 +64,26 @@
             android:layout_below="@+id/artist_name_layout"
             android:id="@+id/tab_layout_container">
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab_layout"
-                    android:layout_width="200dp"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="0dp"
+                android:background="@null">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null">
+                    android:text="Music" />
 
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Music"/>
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Album" />
-                </com.google.android.material.tabs.TabLayout>
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Album" />
+            </com.google.android.material.tabs.TabLayout>
         </RelativeLayout>
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"

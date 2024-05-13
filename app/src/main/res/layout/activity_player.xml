@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/header_layout">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/player_image"
             android:layout_width="300dp"
             android:layout_height="300dp"
