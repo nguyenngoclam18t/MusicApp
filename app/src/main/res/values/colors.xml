@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="font_color">#D0D1D4</color>
+    <color name="blue">#C35BD1</color>
+    <color name="LightCoral">#ED8770</color>
+    <color name="Cranberry">#D9519D</color>
+    <color name="Green">#4CAF50</color>
+    <color name="Arsenic">#383B49</color>
+    <color name="BlackCoral">#585A66</color>
+    <color name="JasperOrange">#E1914B</color>
 </resources>

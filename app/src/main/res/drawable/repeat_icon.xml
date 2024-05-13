@@ -1,0 +1,5 @@
+<!--thay đổi màu sắc icon khi nhấn vào-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@drawable/repeat_icon_green"/>
+    <item android:drawable="@drawable/repeat_icon_white"/>
+</selector>
