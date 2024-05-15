@@ -1,4 +1,4 @@
-package com.example.musicapp;
+package com.example.musicapp.View;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.musicapp.R;
 
 public class OTPVerification extends AppCompatActivity {
 

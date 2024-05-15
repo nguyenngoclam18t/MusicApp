@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Profile">
+    tools:context=".View.Profile">
 
 
 
@@ -105,7 +105,7 @@
             android:layout_margin="30dp"
 
             android:scaleType="fitCenter"
-            android:src="@drawable/library" />
+            android:src="@drawable/thongbao" />
 
         <LinearLayout
             android:layout_width="243dp"

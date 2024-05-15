@@ -1,4 +1,4 @@
-package com.example.musicapp;
+package com.example.musicapp.View;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.musicapp.R;
 
 public class Profile extends AppCompatActivity {
     private EditText editTextName;
@@ -29,12 +31,6 @@ public class Profile extends AppCompatActivity {
             return insets;
 
         });
-        editTextName = findViewById(R.id.editTextName);
-        editTextDOB = findViewById(R.id.editTextDOB);
-        editTextAddress = findViewById(R.id.editTextAddress);
-        editTextPhone = findViewById(R.id.editTextPhone);
-        editTextEmail = findViewById(R.id.editTextEmail);
-        profileButton = findViewById(R.id.profileButton);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.example.musicapp;
+package com.example.musicapp.View;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.musicapp.R;
 
 public class Register extends AppCompatActivity {
 
