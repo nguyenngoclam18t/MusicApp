@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layoutDescription="@xml/activity_the_loai_scene"
+    android:background="@color/black"
+    tools:context=".View.TheLoai">
+    <LinearLayout
+        android:layout_marginLeft="16dp"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            android:text="Search"/>
+
+        <Button
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:icon="@drawable/outline_photo_camera_24"
+            app:iconTint="@color/md_theme_dark_inverseSurface" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:hint="Artists, songs or pobcasts">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_sreach"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="49dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarSize="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="100dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Thể loại thịnh hành"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textColor="@color/white" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#FBA3D1"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Rap"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#EBA3FB"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Indie"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Podcast phổ biển"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textColor="@color/white" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#BC99FD"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Cuộc sống &amp;\nchữa lành"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#A3AFFB"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Hài độc thoại"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tât cả thể loại"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textColor="@color/white" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#A3CEFB"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Pop"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#A3F8FB"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Indie"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#A3FBCB"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Rap"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#ACFBA3"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="R&amp;B"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#FBF7A3"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Ballad"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#FABB84"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Bolero"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#F8947A"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Podcast"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="#FF7C7C"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
+                    <!-- Media -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="2"
+                        android:paddingStart="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Jazz"
+                        android:textAppearance="?attr/textAppearanceLabelLarge"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="end|bottom"
+                        android:importantForAccessibility="no"
+                        android:rotation="25"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/son_tung_mtp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
