@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "19611519825",
+    "firebase_url": "https://spotiny-89ad8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "spotiny-89ad8",
+    "storage_bucket": "spotiny-89ad8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19611519825:android:8ee1be754df76208f26170",
+        "android_client_info": {
+          "package_name": "com.example.musicapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlw9sEIXTbR8Uh54ZqtxJLCsXyU3_CG7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
