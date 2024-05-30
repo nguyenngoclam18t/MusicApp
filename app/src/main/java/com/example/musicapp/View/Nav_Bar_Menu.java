@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import com.example.musicapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.FirebaseApp;
 
 public class Nav_Bar_Menu extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -23,6 +24,7 @@ public class Nav_Bar_Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_bar_menu);
         loadFragment(new HomePageFragment());
+        FirebaseApp.initializeApp(this);
         //checkout
         Get();
 

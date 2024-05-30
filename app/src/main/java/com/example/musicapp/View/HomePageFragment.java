@@ -22,6 +22,7 @@ import com.example.musicapp.Controller.NewsMusicAdapter;
 import com.example.musicapp.Controller.NewsTodayAdapter;
 import com.example.musicapp.Controller.TopMusicHomePageAdapter;
 import com.example.musicapp.Model.ArtistsModel;
+import com.example.musicapp.Model.FireStoreDB;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,12 +53,6 @@ public class HomePageFragment extends Fragment {
     RecyclerView recyclerViewFavoriteSinger;
 
     ImageSlider imageSlider;
-    ArrayList<SongModel> arrSong = new ArrayList<>();
-    ArrayList<ArtistsModel> arrArtists = new ArrayList<>();
-
-    FirebaseFirestore db;
-
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -97,7 +92,7 @@ public class HomePageFragment extends Fragment {
 
         recyclerViewNewsToday.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         RecyclerView.Adapter adapterNewsToday;
-        adapterNewsToday = new NewsTodayAdapter(arrArtists);
+        adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrArtists);
         recyclerViewNewsToday.setAdapter(adapterNewsToday);
 
     }
@@ -115,7 +110,7 @@ public class HomePageFragment extends Fragment {
     }
 
     private void effectNewsMusic() {
-        ArrayList<SongModel> arrNewsSongs = new ArrayList<>(arrSong.subList(0, Math.min(arrSong.size(), 15)));
+        ArrayList<SongModel> arrNewsSongs = new ArrayList<>(FireStoreDB.arrSong.subList(0, Math.min(FireStoreDB.arrSong.size(), 15)));
         RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs);
         recyclerViewNewsMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewNewsMusic.setAdapter(adapterNewsMusic);
@@ -128,72 +123,32 @@ public class HomePageFragment extends Fragment {
         nameSinger=(TextView) view.findViewById(R.id.nameSuggestSingerHomepage);
         descSinger=(TextView) view.findViewById(R.id.descSuggestSingerHomepage);
         Picasso.get()
-                .load(arrArtists.get(0).avatarUrl)
+                .load(FireStoreDB.arrArtists.get(0).avatarUrl)
                 .into(img);
-        nameSinger.setText(arrArtists.get(0).artistId);
+        nameSinger.setText(FireStoreDB.arrArtists.get(0).artistId);
         descSinger.setText("đây là 1 ca sĩ trẻ đầy  tài năng và mang đột phá trong gout âm nhạc của mình mong muốn cháy bỏng để phát triển bản thân.");
     }
     private  void effectTopHomePage(){
         RecyclerView.Adapter adapterTop;
-        ArrayList<SongModel> arrTop = new ArrayList<>(arrSong.subList(0, Math.min(arrSong.size(), 5)));
+        ArrayList<SongModel> arrTop = new ArrayList<>(FireStoreDB.arrSong.subList(0, Math.min(FireStoreDB.arrSong.size(), 5)));
         adapterTop=new TopMusicHomePageAdapter(arrTop);
         recyclerViewTopMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewTopMusic.setAdapter(adapterTop);
     }
     private  void effectFavoriteSinger(){
         RecyclerView.Adapter adapterFavoriteSinger;
-        adapterFavoriteSinger=new FarvoriteSingerAdapter(arrArtists);
+        adapterFavoriteSinger=new FarvoriteSingerAdapter(FireStoreDB.arrArtists);
         recyclerViewFavoriteSinger.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewFavoriteSinger.setAdapter(adapterFavoriteSinger);
     }
     private void getArray(View view){
-        db.collection("songs")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String imgUrl = document.getString("imgUrl");
-                                String genreId = document.getString("genreId");
-                                String albumId = document.getString("albumId");
-                                String artistId = document.getString("artistId");
-                                String title = document.getString("title");
-                                String songUrl = document.getString("songUrl");
-                                arrSong.add(new SongModel(document.getId().toString(),title,artistId,albumId,genreId,imgUrl,songUrl));
-                            }
-                            effectNewsMusic();
-                            effectTopHomePage();
-                        } else {
-                            Log.w("FirestoreData", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-        db.collection("artists")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String avartaUrl = document.getString("avatarUrl");
-                                arrArtists.add(new ArtistsModel(document.getId().toString(),avartaUrl));
-                            }
-                            effectSuggestSinger(view);
-                            effectFavoriteSinger();
-                            effectNewsToday();
-                        } else {
-                            Log.w("FirestoreData", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FirebaseApp.initializeApp(getContext());
-        db = FirebaseFirestore.getInstance();
+
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         imageSlider = (ImageSlider) view.findViewById(R.id.imgSliderHomePage);
         recyclerViewNewsToday = (RecyclerView) view.findViewById(R.id.RecyclerViewNewsToday);
@@ -202,8 +157,11 @@ public class HomePageFragment extends Fragment {
         recyclerViewFavoriteSinger=(RecyclerView) view.findViewById(R.id.RecyclerViewFarvoriteSinger);
         getArray(view);
         effectSlider();
-
-
+        effectNewsMusic();
+        effectTopHomePage();
+        effectSuggestSinger(view);
+        effectFavoriteSinger();
+        effectNewsToday();
         return view;
     }
 }
