@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
+import com.example.musicapp.View.HomePageFragment;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -39,6 +40,7 @@ public class NewsMusicAdapter extends RecyclerView.Adapter<NewsMusicAdapter.View
     public void onBindViewHolder(@NonNull NewsMusicAdapter.ViewHolder holder, int position) {
         Picasso.get()
                 .load(arr.get(position).imgUrl)
+                .placeholder(R.drawable.loading)
                 .into(holder.img);
         holder.title.setText(arr.get(position).Title);
         holder.singer.setText(arr.get(position).artistId);

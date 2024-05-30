@@ -19,8 +19,7 @@ public class LoadingScreen extends AppCompatActivity implements FirestoreCallbac
     }
     @Override
     public void onCallback() {
-        // Code to run after Firestore data has been fetched
-        // Starting a new activity
+
         Intent intent = new Intent(LoadingScreen.this, Nav_Bar_Menu.class);
         startActivity(intent);
         finish();

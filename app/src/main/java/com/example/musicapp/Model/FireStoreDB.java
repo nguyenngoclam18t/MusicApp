@@ -8,10 +8,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class FireStoreDB {
     public static ArrayList<SongModel> arrSong = new ArrayList<>();
     public static ArrayList<ArtistsModel> arrArtists = new ArrayList<>();
+    public static ArrayList<AlbumModel> arrAlbum = new ArrayList<>();
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public static void initializeData(final FirestoreCallback callback) {
@@ -31,6 +33,8 @@ public class FireStoreDB {
                                     String songUrl = document.getString("songUrl");
                                     arrSong.add(new SongModel(document.getId(), title, artistId, albumId, genreId, imgUrl, songUrl));
                                 }
+                                Collections.shuffle(arrSong);
+
                             }
                             fetchArtists(callback); // Fetch artists after songs are fetched
                         } else {
@@ -52,6 +56,30 @@ public class FireStoreDB {
                                     String avatarUrl = document.getString("avatarUrl");
                                     arrArtists.add(new ArtistsModel(document.getId(), avatarUrl));
                                 }
+                                Collections.shuffle(arrArtists);
+
+                            }
+                            fetchAlbums(callback);
+                        } else {
+                            Log.w("FirestoreData", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+    private static void fetchAlbums(final FirestoreCallback callback) {
+        db.collection("albums")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            synchronized (arrAlbum) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String artistId = document.getString("artistID");
+                                    String imgUrl = document.getString("imageUrl");
+                                    arrAlbum.add(new AlbumModel(document.getId(),artistId, imgUrl));
+                                }
+                                Collections.shuffle(arrAlbum);
                             }
                             callback.onCallback();
                         } else {

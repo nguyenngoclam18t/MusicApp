@@ -89,24 +89,19 @@ public class HomePageFragment extends Fragment {
     }
 
     private void effectNewsToday() {
-
         recyclerViewNewsToday.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         RecyclerView.Adapter adapterNewsToday;
         adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrArtists);
         recyclerViewNewsToday.setAdapter(adapterNewsToday);
-
     }
 
     private void effectSlider() {
         // slider
         ArrayList<SlideModel> arrSlider = new ArrayList<>();
-        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
-        imageSlider.setImageList(arrSlider, ScaleTypes.CENTER_CROP);
+        for (int i=0;i<10;i++){
+            arrSlider.add(new SlideModel(FireStoreDB.arrAlbum.get(i).imgUrl, ScaleTypes.CENTER_CROP));
+        }
+        imageSlider.setImageList(arrSlider, ScaleTypes.FIT);
     }
 
     private void effectNewsMusic() {
@@ -114,7 +109,6 @@ public class HomePageFragment extends Fragment {
         RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs);
         recyclerViewNewsMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewNewsMusic.setAdapter(adapterNewsMusic);
-
     }
     private void effectSuggestSinger(View view){
         ImageView img;
@@ -141,9 +135,7 @@ public class HomePageFragment extends Fragment {
         recyclerViewFavoriteSinger.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewFavoriteSinger.setAdapter(adapterFavoriteSinger);
     }
-    private void getArray(View view){
 
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -155,7 +147,6 @@ public class HomePageFragment extends Fragment {
         recyclerViewNewsMusic = (RecyclerView) view.findViewById(R.id.RecyclerViewNewsMusic);
         recyclerViewTopMusic = (RecyclerView) view.findViewById(R.id.RecyclerViewTopMusic);
         recyclerViewFavoriteSinger=(RecyclerView) view.findViewById(R.id.RecyclerViewFarvoriteSinger);
-        getArray(view);
         effectSlider();
         effectNewsMusic();
         effectTopHomePage();
