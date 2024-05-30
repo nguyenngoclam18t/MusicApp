@@ -1,5 +1,7 @@
 package com.example.musicapp.Controller;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +11,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.musicapp.Model.Music;
+import com.bumptech.glide.Glide;
+import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
+import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class TopMusicHomePageAdapter extends RecyclerView.Adapter<TopMusicHomePageAdapter.ViewHolder> {
-    ArrayList<Music> arr;
+    ArrayList<SongModel> arr;
 
-    public TopMusicHomePageAdapter(ArrayList<Music> arr) {
+    public TopMusicHomePageAdapter(ArrayList<SongModel> arr) {
         this.arr = arr;
     }
 
@@ -31,9 +36,11 @@ public class TopMusicHomePageAdapter extends RecyclerView.Adapter<TopMusicHomePa
 
     @Override
     public void onBindViewHolder(@NonNull TopMusicHomePageAdapter.ViewHolder holder, int position) {
-        holder.img.setImageResource(arr.get(position).getImage());
-        holder.title.setText(arr.get(position).getTitle());
-        holder.desc.setText(arr.get(position).getSinger());
+        Picasso.get()
+                .load(arr.get(position).imgUrl)
+                .into(holder.img);
+        holder.title.setText(arr.get(position).Title);
+        holder.desc.setText(arr.get(position).artistId);
         holder.stt.setText(Integer.toString(position+1));
     }
     @Override

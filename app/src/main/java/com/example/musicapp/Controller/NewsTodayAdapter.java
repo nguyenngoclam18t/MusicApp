@@ -9,16 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.musicapp.Model.Singer;
+import com.example.musicapp.Model.ArtistsModel;
 import com.example.musicapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.ViewHolder> {
 
-    ArrayList<Singer> lst;
+    ArrayList<ArtistsModel> lst;
 
-    public NewsTodayAdapter(ArrayList<Singer> lst) {
+    public NewsTodayAdapter(ArrayList<ArtistsModel> lst) {
         this.lst = lst;
     }
 
@@ -32,9 +33,10 @@ public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull NewsTodayAdapter.ViewHolder holder, int position) {
-        holder.title.setText(lst.get(position).getName());
-        holder.img.setImageResource(lst.get(position).getImage());
-
+        Picasso.get()
+                .load(lst.get(position).avatarUrl)
+                .into(holder.img);
+        holder.title.setText(lst.get(position).artistId);
     }
 
     @Override

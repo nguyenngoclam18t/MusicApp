@@ -2,10 +2,12 @@ package com.example.musicapp.View;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,16 @@ import com.example.musicapp.Controller.FarvoriteSingerAdapter;
 import com.example.musicapp.Controller.NewsMusicAdapter;
 import com.example.musicapp.Controller.NewsTodayAdapter;
 import com.example.musicapp.Controller.TopMusicHomePageAdapter;
-import com.example.musicapp.Model.Music;
-import com.example.musicapp.Model.Singer;
+import com.example.musicapp.Model.ArtistsModel;
+import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,9 +52,10 @@ public class HomePageFragment extends Fragment {
     RecyclerView recyclerViewFavoriteSinger;
 
     ImageSlider imageSlider;
-    ArrayList<Music> arrMusic = new ArrayList<>();
-    ArrayList<Singer> arrSinger = new ArrayList<>();
+    ArrayList<SongModel> arrSong = new ArrayList<>();
+    ArrayList<ArtistsModel> arrArtists = new ArrayList<>();
 
+    FirebaseFirestore db;
 
 
     // TODO: Rename and change types of parameters
@@ -86,17 +96,9 @@ public class HomePageFragment extends Fragment {
     private void effectNewsToday() {
 
         recyclerViewNewsToday.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        arrSinger.add(new Singer("sơn tùng1","đây là 1 chàng ca sĩ trẻ đầy tài năng và tham vọng", R.drawable.img_news_today));
-        arrSinger.add(new Singer("sơn tùng2","đây là 1 chàng ca sĩ trẻ đầy tài năng và tham vọng", R.drawable.img_news_today));
-        arrSinger.add(new Singer("sơn tùng3","đây là 1 chàng ca sĩ trẻ đầy tài năng và tham vọng", R.drawable.img_news_today));
-        arrSinger.add(new Singer("sơn tùng4","đây là 1 chàng ca sĩ trẻ đầy tài năng và tham vọng", R.drawable.img_news_today));
-        arrSinger.add(new Singer("sơn tùng5","đây là 1 chàng ca sĩ trẻ đầy tài năng và tham vọng", R.drawable.img_news_today));
-        arrSinger.add(new Singer("sơn tùng6","đây là 1 chàng ca sĩ trẻ đầy tài năng và tham vọng", R.drawable.img_news_today));
-        arrSinger.add(new Singer("sơn tùng7","đây là 1 chàng ca sĩ trẻ đầy tài năng và tham vọng", R.drawable.img_news_today));
         RecyclerView.Adapter adapterNewsToday;
-        adapterNewsToday = new NewsTodayAdapter(arrSinger);
+        adapterNewsToday = new NewsTodayAdapter(arrArtists);
         recyclerViewNewsToday.setAdapter(adapterNewsToday);
-
 
     }
 
@@ -113,21 +115,8 @@ public class HomePageFragment extends Fragment {
     }
 
     private void effectNewsMusic() {
-        arrMusic.add(new Music("Chúng ta của tương lai", "Sơn Tùng", R.drawable.sample_img_musicnews2));
-        arrMusic.add(new Music("THERE’S NO ONE AT ALL", "Sơn Tùng", R.drawable.sample_img_musicnews1));
-        arrMusic.add(new Music("Chúng ta của tương lai", "Sơn Tùng", R.drawable.sample_img_musicnews2));
-        arrMusic.add(new Music("THERE’S NO ONE AT ALL", "Sơn Tùng", R.drawable.sample_img_musicnews1));
-        arrMusic.add(new Music("Chúng ta của tương lai", "Sơn Tùng", R.drawable.sample_img_musicnews2));
-        arrMusic.add(new Music("THERE’S NO ONE AT ALL", "Sơn Tùng", R.drawable.sample_img_musicnews1));
-        arrMusic.add(new Music("Chúng ta của tương lai", "Sơn Tùng", R.drawable.sample_img_musicnews2));
-        arrMusic.add(new Music("THERE’S NO ONE AT ALL", "Sơn Tùng", R.drawable.sample_img_musicnews1));
-        arrMusic.add(new Music("Chúng ta của tương lai", "Sơn Tùng", R.drawable.sample_img_musicnews2));
-        arrMusic.add(new Music("THERE’S NO ONE AT ALL", "Sơn Tùng", R.drawable.sample_img_musicnews1));
-        arrMusic.add(new Music("Chúng ta của tương lai", "Sơn Tùng", R.drawable.sample_img_musicnews2));
-        arrMusic.add(new Music("THERE’S NO ONE AT ALL", "Sơn Tùng", R.drawable.sample_img_musicnews1));
-        arrMusic.add(new Music("Chúng ta của tương lai", "Sơn Tùng", R.drawable.sample_img_musicnews2));
-        arrMusic.add(new Music("THERE’S NO ONE AT ALL", "Sơn Tùng", R.drawable.sample_img_musicnews1));
-        RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrMusic);
+        ArrayList<SongModel> arrNewsSongs = new ArrayList<>(arrSong.subList(0, Math.min(arrSong.size(), 15)));
+        RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs);
         recyclerViewNewsMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewNewsMusic.setAdapter(adapterNewsMusic);
 
@@ -138,39 +127,83 @@ public class HomePageFragment extends Fragment {
         img=(ImageView) view.findViewById(R.id.imgSuggestSingerHomepage);
         nameSinger=(TextView) view.findViewById(R.id.nameSuggestSingerHomepage);
         descSinger=(TextView) view.findViewById(R.id.descSuggestSingerHomepage);
-        img.setImageResource(R.drawable.img_news_today);
-        nameSinger.setText(arrSinger.get(0).getName());
-        descSinger.setText(arrSinger.get(0).getAbout());
+        Picasso.get()
+                .load(arrArtists.get(0).avatarUrl)
+                .into(img);
+        nameSinger.setText(arrArtists.get(0).artistId);
+        descSinger.setText("đây là 1 ca sĩ trẻ đầy  tài năng và mang đột phá trong gout âm nhạc của mình mong muốn cháy bỏng để phát triển bản thân.");
     }
     private  void effectTopHomePage(){
         RecyclerView.Adapter adapterTop;
-        ArrayList<Music> arrTop = new ArrayList<>(arrMusic.subList(0, Math.min(arrMusic.size(), 5)));
+        ArrayList<SongModel> arrTop = new ArrayList<>(arrSong.subList(0, Math.min(arrSong.size(), 5)));
         adapterTop=new TopMusicHomePageAdapter(arrTop);
         recyclerViewTopMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewTopMusic.setAdapter(adapterTop);
     }
     private  void effectFavoriteSinger(){
         RecyclerView.Adapter adapterFavoriteSinger;
-        adapterFavoriteSinger=new FarvoriteSingerAdapter(arrSinger);
+        adapterFavoriteSinger=new FarvoriteSingerAdapter(arrArtists);
         recyclerViewFavoriteSinger.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewFavoriteSinger.setAdapter(adapterFavoriteSinger);
+    }
+    private void getArray(View view){
+        db.collection("songs")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String imgUrl = document.getString("imgUrl");
+                                String genreId = document.getString("genreId");
+                                String albumId = document.getString("albumId");
+                                String artistId = document.getString("artistId");
+                                String title = document.getString("title");
+                                String songUrl = document.getString("songUrl");
+                                arrSong.add(new SongModel(document.getId().toString(),title,artistId,albumId,genreId,imgUrl,songUrl));
+                            }
+                            effectNewsMusic();
+                            effectTopHomePage();
+                        } else {
+                            Log.w("FirestoreData", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+        db.collection("artists")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String avartaUrl = document.getString("avatarUrl");
+                                arrArtists.add(new ArtistsModel(document.getId().toString(),avartaUrl));
+                            }
+                            effectSuggestSinger(view);
+                            effectFavoriteSinger();
+                            effectNewsToday();
+                        } else {
+                            Log.w("FirestoreData", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        FirebaseApp.initializeApp(getContext());
+        db = FirebaseFirestore.getInstance();
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         imageSlider = (ImageSlider) view.findViewById(R.id.imgSliderHomePage);
         recyclerViewNewsToday = (RecyclerView) view.findViewById(R.id.RecyclerViewNewsToday);
         recyclerViewNewsMusic = (RecyclerView) view.findViewById(R.id.RecyclerViewNewsMusic);
         recyclerViewTopMusic = (RecyclerView) view.findViewById(R.id.RecyclerViewTopMusic);
         recyclerViewFavoriteSinger=(RecyclerView) view.findViewById(R.id.RecyclerViewFarvoriteSinger);
+        getArray(view);
         effectSlider();
-        effectNewsToday();
-        effectSuggestSinger(view);
-        effectNewsMusic();
-        effectTopHomePage();
-        effectFavoriteSinger();
+
+
         return view;
     }
 }

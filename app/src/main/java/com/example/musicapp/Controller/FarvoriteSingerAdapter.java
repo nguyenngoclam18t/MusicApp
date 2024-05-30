@@ -9,15 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.musicapp.Model.Singer;
+import com.example.musicapp.Model.ArtistsModel;
 import com.example.musicapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class FarvoriteSingerAdapter extends RecyclerView.Adapter<FarvoriteSingerAdapter.ViewHolder> {
-    ArrayList<Singer> arr;
+    ArrayList<ArtistsModel> arr;
 
-    public FarvoriteSingerAdapter(ArrayList<Singer> arr) {
+    public FarvoriteSingerAdapter(ArrayList<ArtistsModel> arr) {
         this.arr = arr;
     }
 
@@ -30,8 +31,10 @@ public class FarvoriteSingerAdapter extends RecyclerView.Adapter<FarvoriteSinger
 
     @Override
     public void onBindViewHolder(@NonNull FarvoriteSingerAdapter.ViewHolder holder, int position) {
-        holder.img.setImageResource(arr.get(position).getImage());
-        holder.title.setText(arr.get(position).getName());
+        Picasso.get()
+                .load(arr.get(position).avatarUrl)
+                .into(holder.img);
+        holder.title.setText(arr.get(position).artistId);
     }
 
     @Override
