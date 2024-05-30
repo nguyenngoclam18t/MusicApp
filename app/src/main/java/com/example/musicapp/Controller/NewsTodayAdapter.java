@@ -35,6 +35,7 @@ public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.View
     public void onBindViewHolder(@NonNull NewsTodayAdapter.ViewHolder holder, int position) {
         Picasso.get()
                 .load(lst.get(position).avatarUrl)
+                .placeholder(R.drawable.loading)
                 .into(holder.img);
         holder.title.setText(lst.get(position).artistId);
     }

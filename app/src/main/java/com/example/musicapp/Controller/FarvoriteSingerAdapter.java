@@ -33,6 +33,7 @@ public class FarvoriteSingerAdapter extends RecyclerView.Adapter<FarvoriteSinger
     public void onBindViewHolder(@NonNull FarvoriteSingerAdapter.ViewHolder holder, int position) {
         Picasso.get()
                 .load(arr.get(position).avatarUrl)
+                .placeholder(R.drawable.loading)
                 .into(holder.img);
         holder.title.setText(arr.get(position).artistId);
     }
