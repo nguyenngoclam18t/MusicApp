@@ -91,7 +91,7 @@ public class HomePageFragment extends Fragment {
     private void effectNewsToday() {
         recyclerViewNewsToday.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         RecyclerView.Adapter adapterNewsToday;
-        adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrArtists);
+        adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrAlbum);
         recyclerViewNewsToday.setAdapter(adapterNewsToday);
     }
 
