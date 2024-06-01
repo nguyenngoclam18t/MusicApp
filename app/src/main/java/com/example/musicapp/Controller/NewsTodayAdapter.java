@@ -1,5 +1,6 @@
 package com.example.musicapp.Controller;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +34,19 @@ public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String imageUrl = lst.get(position).imgUrl;
+        AlbumModel albumModel=lst.get(position);
+
         Picasso.get()
-                .load(imageUrl)
+                .load(albumModel.imgUrl)
                 .placeholder(R.drawable.loading)
                 .into(holder.img);
-        holder.title.setText(lst.get(position).albumId);
+        holder.title.setText(albumModel.albumId);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TAG", "đây là click "+albumModel.albumId);
+            }
+        });
     }
 
     @Override

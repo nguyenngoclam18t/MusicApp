@@ -50,12 +50,12 @@ public class Nav_Bar_Menu extends AppCompatActivity {
                     // Load Shop fragment or perform other actions
                     return true;
                 } else if (id == R.id.navigation_top) {
-                    //loadFragment(new HomePageFragment());
+                    loadFragment(new TopSongFragment());
 
                     // Load Top fragment or perform other actions
                     return true;
                 } else if (id == R.id.navigation_genres) {
-                    //loadFragment(new HomePageFragment());
+                    loadFragment(new GenreSongsFragment());
 
                     // Load Cart fragment or perform other actions
                     return true;

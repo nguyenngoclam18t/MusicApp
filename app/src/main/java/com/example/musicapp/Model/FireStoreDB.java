@@ -14,6 +14,7 @@ public class FireStoreDB {
     public static ArrayList<SongModel> arrSong = new ArrayList<>();
     public static ArrayList<ArtistsModel> arrArtists = new ArrayList<>();
     public static ArrayList<AlbumModel> arrAlbum = new ArrayList<>();
+    public static ArrayList<GenreModel> arrGenre = new ArrayList<>();
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public static void initializeData(final FirestoreCallback callback) {
@@ -58,6 +59,26 @@ public class FireStoreDB {
                                 }
                                 Collections.shuffle(arrArtists);
 
+                            }
+                            fetchGenre(callback);
+                        } else {
+                            Log.w("FirestoreData", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+    private static void fetchGenre(final FirestoreCallback callback) {
+        db.collection("genres")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            synchronized (arrGenre) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    arrGenre.add(new GenreModel(document.getId()));
+                                }
+                                Collections.shuffle(arrGenre);
                             }
                             fetchAlbums(callback);
                         } else {
