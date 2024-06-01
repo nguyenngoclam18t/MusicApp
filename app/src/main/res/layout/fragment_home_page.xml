@@ -8,9 +8,10 @@
     tools:context=".View.HomePageFragment">
 
     <FrameLayout
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_bg"
+        android:padding="10dp">
 
         <LinearLayout
             android:id="@+id/recycleViewTopHomePage"
@@ -51,6 +52,7 @@
                         android:fontFamily="@font/bungee_regular"
                         android:gravity="center"
                         android:text="SPOTINY"
+                        android:textColor="@color/font_color"
                         android:textSize="20dp" />
 
                 </LinearLayout>
@@ -60,7 +62,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:orientation="horizontal"/>
+                    android:orientation="horizontal" />
 
             </LinearLayout>
 
@@ -77,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Chào buổi sáng "
+                    android:textColor="@color/font_color"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -92,6 +95,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RecyclerViewNewsToday"
                 android:layout_width="match_parent"
+
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:clipToPadding="false"
@@ -102,6 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:textColor="@color/font_color"
                 android:text="Nổi bật ngày hôm nay"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -135,6 +140,7 @@
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/font_color"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Nhạc mới mỗi ngày "
@@ -162,6 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Nghệ sĩ đề xuất"
+                android:textColor="@color/font_color"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -169,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/background_graytrasnparent"
+                android:background="@drawable/background_top_homepage"
                 android:orientation="horizontal"
                 android:padding="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -198,6 +205,7 @@
                         android:id="@+id/nameSuggestSingerHomepage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/font_color"
                         android:paddingBottom="15dp"
                         android:text="Họ tên ca sĩ"
                         android:textSize="20dp"
@@ -207,6 +215,7 @@
                         android:id="@+id/descSuggestSingerHomepage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/font_color"
                         android:text="About" />
                 </LinearLayout>
             </LinearLayout>
@@ -218,13 +227,14 @@
                 android:layout_marginTop="20dp"
                 android:text="Bảng xếp hạng"
                 android:textSize="20dp"
+                android:textColor="@color/font_color"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/background_graytrasnparent"
+                android:background="@drawable/background_top_homepage"
                 android:clipToOutline="true"
                 android:orientation="vertical">
 
@@ -241,6 +251,7 @@
                     android:layout_height="match_parent"
                     android:padding="10dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -255,6 +266,7 @@
                     android:layout_weight="1"
                     android:text="nghệ sĩ yêu thích"
                     android:textSize="20dp"
+                    android:textColor="@color/font_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -265,11 +277,12 @@
                     android:textColor="#FF9800" />
 
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RecyclerViewFarvoriteSinger"
                 android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
                 android:layout_weight="1" />
 
 

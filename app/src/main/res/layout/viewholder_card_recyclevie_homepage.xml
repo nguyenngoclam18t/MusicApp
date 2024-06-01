@@ -21,6 +21,7 @@
         android:id="@+id/titleCardHomePage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/font_color"
         android:text="Tên bài hát"
         android:padding="10px"
         android:textStyle="bold"
@@ -33,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10px"
+        android:textColor="@color/font_color"
         android:text="Tác giả"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleCardHomePage" />
