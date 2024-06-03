@@ -40,13 +40,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/header_layout">
 
-        <ImageView
-            android:id="@+id/player_image"
-            android:layout_width="300dp"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/song_img"
+            android:layout_width="350dp"
             android:layout_height="300dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:src="@drawable/img"/>
+            android:src="@drawable/img"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerFamilyRounded"/>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -54,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/player_image_layout"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
@@ -83,6 +86,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/favourite"
             android:background="@null"
+            android:id="@+id/btnFav"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
@@ -92,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/player_details_layout"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
         <TextView
@@ -157,7 +161,7 @@
             android:src="@drawable/previous"/>
 
         <ImageButton
-            android:id="@+id/play_pause"
+            android:id="@+id/play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -166,8 +170,19 @@
             android:layout_marginBottom="32dp"
             android:background="@null"
             android:contentDescription="Play or pause button"
-            android:src="@drawable/play" />
+            android:src="@drawable/pause" />
 
+        <ImageButton
+            android:id="@+id/play_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="40dp"
+            android:background="@null"
+            android:contentDescription="Play or pause button"
+            android:src="@drawable/pause" />
 
         <ImageButton
             android:id="@+id/id_next"

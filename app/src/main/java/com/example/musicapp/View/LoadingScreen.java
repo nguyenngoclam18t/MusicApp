@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.musicapp.Model.AlbumModel;
+import com.example.musicapp.Model.ArtistsModel;
 import com.example.musicapp.Model.FireStoreDB;
 import com.example.musicapp.Model.FirestoreCallback;
+import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
+
+import java.util.ArrayList;
 
 public class LoadingScreen extends AppCompatActivity implements FirestoreCallback {
 
@@ -17,12 +22,31 @@ public class LoadingScreen extends AppCompatActivity implements FirestoreCallbac
         setContentView(R.layout.activity_loading_screen);
         FireStoreDB.initializeData(this);
     }
+
     @Override
     public void onCallback() {
-        // Code to run after Firestore data has been fetched
-        // Starting a new activity
         Intent intent = new Intent(LoadingScreen.this, Nav_Bar_Menu.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onSongsCallback(ArrayList<SongModel> songs) {
+
+    }
+
+    @Override
+    public void onAlbumsCallback(ArrayList<AlbumModel> album) {
+
+    }
+
+    @Override
+    public void onArtistsCallback(ArrayList<ArtistsModel> artists) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }

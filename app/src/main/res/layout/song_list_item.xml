@@ -24,21 +24,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            tools:text="Song name"
+            tools:text="Title"
             android:textColor="@color/font_color"
             android:textStyle="bold"
             android:id="@+id/tvSongTitle"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Artist"
-            android:textColor="@color/Arsenic"
+            tools:text="subtitle"
+            android:textColor="@color/text_shadow_white"
             android:id="@+id/tvArtist"/>
 
     </LinearLayout>
-
-
-
-
-
 </RelativeLayout>

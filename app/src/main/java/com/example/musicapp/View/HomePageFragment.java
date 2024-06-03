@@ -1,13 +1,12 @@
 package com.example.musicapp.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,27 +22,15 @@ import com.example.musicapp.Controller.NewsTodayAdapter;
 import com.example.musicapp.Controller.TopMusicHomePageAdapter;
 import com.example.musicapp.Model.ArtistsModel;
 import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.OnArtistClick;
+import com.example.musicapp.Model.OnSongClick;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomePageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class HomePageFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class HomePageFragment extends Fragment implements OnArtistClick, OnSongClick {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     //my varible
@@ -53,23 +40,10 @@ public class HomePageFragment extends Fragment {
     RecyclerView recyclerViewFavoriteSinger;
 
     ImageSlider imageSlider;
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public HomePageFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomePageFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomePageFragment newInstance(String param1, String param2) {
         HomePageFragment fragment = new HomePageFragment();
         Bundle args = new Bundle();
@@ -79,20 +53,11 @@ public class HomePageFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     private void effectNewsToday() {
 
         recyclerViewNewsToday.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         RecyclerView.Adapter adapterNewsToday;
-        adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrArtists);
+        adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrArtists, this);
         recyclerViewNewsToday.setAdapter(adapterNewsToday);
 
     }
@@ -111,11 +76,11 @@ public class HomePageFragment extends Fragment {
 
     private void effectNewsMusic() {
         ArrayList<SongModel> arrNewsSongs = new ArrayList<>(FireStoreDB.arrSong.subList(0, Math.min(FireStoreDB.arrSong.size(), 15)));
-        RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs);
+        RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs, this);
         recyclerViewNewsMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewNewsMusic.setAdapter(adapterNewsMusic);
-
     }
+
     private void effectSuggestSinger(View view){
         ImageView img;
         TextView nameSinger,descSinger;
@@ -123,9 +88,9 @@ public class HomePageFragment extends Fragment {
         nameSinger=(TextView) view.findViewById(R.id.nameSuggestSingerHomepage);
         descSinger=(TextView) view.findViewById(R.id.descSuggestSingerHomepage);
         Picasso.get()
-                .load(FireStoreDB.arrArtists.get(0).avatarUrl)
+                .load(FireStoreDB.arrArtists.get(0).getAvatarUrl())
                 .into(img);
-        nameSinger.setText(FireStoreDB.arrArtists.get(0).artistId);
+        nameSinger.setText(FireStoreDB.arrArtists.get(0).getArtistName());
         descSinger.setText("đây là 1 ca sĩ trẻ đầy  tài năng và mang đột phá trong gout âm nhạc của mình mong muốn cháy bỏng để phát triển bản thân.");
     }
     private  void effectTopHomePage(){
@@ -137,7 +102,7 @@ public class HomePageFragment extends Fragment {
     }
     private  void effectFavoriteSinger(){
         RecyclerView.Adapter adapterFavoriteSinger;
-        adapterFavoriteSinger=new FarvoriteSingerAdapter(FireStoreDB.arrArtists);
+        adapterFavoriteSinger=new FarvoriteSingerAdapter(FireStoreDB.arrArtists, this);
         recyclerViewFavoriteSinger.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewFavoriteSinger.setAdapter(adapterFavoriteSinger);
     }
@@ -163,5 +128,22 @@ public class HomePageFragment extends Fragment {
         effectFavoriteSinger();
         effectNewsToday();
         return view;
+    }
+
+    @Override
+    public void onSongClick(SongModel song) {
+        Intent intent = new Intent(getContext(), PlayerActivity.class);
+        intent.putExtra("songId", song.getSongId());
+        startActivity(intent);
+    }
+
+    public void onArtistClick(ArtistsModel artists) {
+        Bundle bundle = new Bundle();
+        bundle.putString("artistId", artists.getArtistId());
+        bundle.putString("artistName", artists.getArtistName());
+        bundle.putString("avatarUrl", artists.getAvatarUrl());
+        ArtistProfileFragment artistProfileFragment = new ArtistProfileFragment();
+        artistProfileFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, artistProfileFragment).addToBackStack(null).commit();
     }
 }
