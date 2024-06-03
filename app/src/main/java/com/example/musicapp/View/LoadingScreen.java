@@ -11,6 +11,9 @@ import com.example.musicapp.Model.FireStoreDB;
 import com.example.musicapp.Model.FirestoreCallback;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import java.util.ArrayList;
 
@@ -22,12 +25,23 @@ public class LoadingScreen extends AppCompatActivity implements FirestoreCallbac
         setContentView(R.layout.activity_loading_screen);
         FireStoreDB.initializeData(this);
     }
-
     @Override
     public void onCallback() {
+        preloadImages();
         Intent intent = new Intent(LoadingScreen.this, Nav_Bar_Menu.class);
         startActivity(intent);
         finish();
+    }
+    private  void preloadImages(){
+        for (AlbumModel model:FireStoreDB.arrAlbum ) {
+            loadImage(model.imgUrl);
+        }
+        for (ArtistsModel model:FireStoreDB.arrArtists ) {
+            loadImage(model.avatarUrl);
+        }
+    }
+    private void loadImage(String imageUrls) {
+        Picasso.get().load(imageUrls).fetch();
     }
 
     @Override

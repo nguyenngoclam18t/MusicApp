@@ -37,6 +37,7 @@ public class TopMusicHomePageAdapter extends RecyclerView.Adapter<TopMusicHomePa
     @Override
     public void onBindViewHolder(@NonNull TopMusicHomePageAdapter.ViewHolder holder, int position) {
         Picasso.get()
+                .placeholder(R.drawable.loading)
                 .load(arr.get(position).getImgUrl())
                 .into(holder.img);
         holder.title.setText(arr.get(position).getTitle());

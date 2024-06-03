@@ -10,6 +10,7 @@
         android:id="@+id/sttTopHomePage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/font_color"
 
         android:layout_marginEnd="10dp"
         android:text="1"
@@ -37,6 +38,7 @@
     <TextView
         android:id="@+id/titleTopHomePage"
         android:layout_width="wrap_content"
+        android:textColor="@color/font_color"
         android:layout_height="19dp"
         android:layout_marginStart="12dp"
         android:text="THERE’S NO ONE AT ALL"
@@ -50,6 +52,7 @@
     <TextView
         android:id="@+id/descTopHomePage"
         android:layout_width="124dp"
+        android:textColor="@color/font_color"
         android:layout_height="22dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"

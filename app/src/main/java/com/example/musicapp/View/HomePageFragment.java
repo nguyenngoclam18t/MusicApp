@@ -79,8 +79,8 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
         RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs, this);
         recyclerViewNewsMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewNewsMusic.setAdapter(adapterNewsMusic);
-    }
 
+    }
     private void effectSuggestSinger(View view){
         ImageView img;
         TextView nameSinger,descSinger;
@@ -90,8 +90,8 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
         Picasso.get()
                 .load(FireStoreDB.arrArtists.get(0).getAvatarUrl())
                 .into(img);
-        nameSinger.setText(FireStoreDB.arrArtists.get(0).getArtistName());
-        descSinger.setText("đây là 1 ca sĩ trẻ đầy  tài năng và mang đột phá trong gout âm nhạc của mình mong muốn cháy bỏng để phát triển bản thân.");
+        nameSinger.setText(FireStoreDB.arrArtists.get(0).artistId);
+        descSinger.setText("đây là 1 ca sĩ trẻ đầy  tài năng và mang đột phá trong gout âm nhạc của mình.");
     }
     private  void effectTopHomePage(){
         RecyclerView.Adapter adapterTop;

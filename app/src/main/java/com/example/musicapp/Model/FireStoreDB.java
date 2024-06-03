@@ -11,10 +11,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.RequestCreator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class FireStoreDB {
     public static ArrayList<SongModel> arrSong = new ArrayList<>();
     public static ArrayList<ArtistsModel> arrArtists = new ArrayList<>();
+    public static ArrayList<AlbumModel> arrAlbum = new ArrayList<>();
+    public static ArrayList<GenreModel> arrGenre = new ArrayList<>();
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "FireStoreDB";
 
@@ -35,6 +38,8 @@ public class FireStoreDB {
                                     String songUrl = document.getString("songUrl");
                                     arrSong.add(new SongModel(document.getId(), title, artistId, albumId, genreId, imgUrl, songUrl));
                                 }
+                                Collections.shuffle(arrSong);
+
                             }
                             fetchArtists(callback); // Fetch artists after songs are fetched
                         } else {
@@ -57,6 +62,50 @@ public class FireStoreDB {
                                     String avatarUrl = document.getString("avatarUrl");
                                     arrArtists.add(new ArtistsModel(document.getId(), artistName, avatarUrl));
                                 }
+                                Collections.shuffle(arrArtists);
+
+                            }
+                            fetchGenre(callback);
+                        } else {
+                            Log.w("FirestoreData", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+    private static void fetchGenre(final FirestoreCallback callback) {
+        db.collection("genres")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            synchronized (arrGenre) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    arrGenre.add(new GenreModel(document.getId()));
+                                }
+                                Collections.shuffle(arrGenre);
+                            }
+                            fetchAlbums(callback);
+                        } else {
+                            Log.w("FirestoreData", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+    private static void fetchAlbums(final FirestoreCallback callback) {
+        db.collection("albums")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            synchronized (arrAlbum) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String artistId = document.getString("artistID");
+                                    String imgUrl = document.getString("imageUrl");
+                                    arrAlbum.add(new AlbumModel(document.getId(),artistId, imgUrl));
+                                }
+                                Collections.shuffle(arrAlbum);
                             }
                             callback.onCallback();
                         } else {

@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.musicapp.Model.OnSongClick;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
+import com.example.musicapp.View.HomePageFragment;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;

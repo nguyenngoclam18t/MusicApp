@@ -2,6 +2,7 @@ package com.example.musicapp.Controller;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.musicapp.Model.AlbumModel;
 import com.example.musicapp.Model.ArtistsModel;
 import com.example.musicapp.Model.OnArtistClick;
 import com.example.musicapp.R;
@@ -41,12 +43,22 @@ public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewsTodayAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        AlbumModel albumModel=lst.get(position);
+
         Picasso.get()
                 .load(lst.get(position).getAvatarUrl())
+                .placeholder(R.drawable.loading)
                 .into(holder.img);
         holder.title.setText(lst.get(position).getArtistName());
         ArtistsModel artistsModel = lst.get(position);
+        holder.title.setText(albumModel.albumId);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TAG", "đây là click "+albumModel.albumId);
+            }
+        });
     }
 
     @Override
