@@ -34,10 +34,10 @@ public class LoadingScreen extends AppCompatActivity implements FirestoreCallbac
     }
     private  void preloadImages(){
         for (AlbumModel model:FireStoreDB.arrAlbum ) {
-            loadImage(model.imgUrl);
+            loadImage(model.imageUrl);
         }
         for (ArtistsModel model:FireStoreDB.arrArtists ) {
-            loadImage(model.avatarUrl);
+            loadImage(model.getAvatarUrl());
         }
     }
     private void loadImage(String imageUrls) {

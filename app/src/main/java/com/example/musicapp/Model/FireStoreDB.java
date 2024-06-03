@@ -103,7 +103,8 @@ public class FireStoreDB {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     String artistId = document.getString("artistID");
                                     String imgUrl = document.getString("imageUrl");
-                                    arrAlbum.add(new AlbumModel(document.getId(),artistId, imgUrl));
+                                    String albumName = document.getString("albumName");
+                                    arrAlbum.add(new AlbumModel(document.getId(),albumName,artistId, imgUrl));
                                 }
                                 Collections.shuffle(arrAlbum);
                             }
