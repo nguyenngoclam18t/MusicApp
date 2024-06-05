@@ -14,13 +14,15 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.musicapp.Controller.ViewPagerAdapter;
+import com.example.musicapp.Model.AlbumModel;
 import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.OnAlbumClick;
 import com.example.musicapp.R;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
-public class ArtistProfileFragment extends Fragment {
+public class ArtistProfileFragment extends Fragment implements OnAlbumClick {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ImageButton btnFollow;
@@ -78,7 +80,7 @@ public class ArtistProfileFragment extends Fragment {
 
             Bundle albumBundle = new Bundle();
             albumBundle.putString("artistId", artistId);
-            AlbumFragment albumFragment = new AlbumFragment();
+            AlbumFragment albumFragment = new AlbumFragment(this);
             albumFragment.setArguments(albumBundle);
 
             ViewPagerAdapter viewPagerAdapter = (ViewPagerAdapter) viewPager.getAdapter();
@@ -99,5 +101,14 @@ public class ArtistProfileFragment extends Fragment {
 
     public static RequestCreator resizeImage(RequestCreator requestCreator, int targetWidth, int targetHeight) {
         return requestCreator.resize(targetWidth, targetHeight).centerCrop();
+    }
+    @Override
+    public void OnAlbumClick(AlbumModel album) {
+        Bundle bundle = new Bundle();
+        bundle.putString("albumId", album.getAlbumName());
+        bundle.putString("albumimg", album.getImageUrl());
+        TopSongFragment topSongFragment=new TopSongFragment();
+        topSongFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, topSongFragment).addToBackStack(null).commit();
     }
 }

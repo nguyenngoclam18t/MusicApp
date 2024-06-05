@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -20,8 +21,10 @@ import com.example.musicapp.Controller.FarvoriteSingerAdapter;
 import com.example.musicapp.Controller.NewsMusicAdapter;
 import com.example.musicapp.Controller.NewsTodayAdapter;
 import com.example.musicapp.Controller.TopMusicHomePageAdapter;
+import com.example.musicapp.Model.AlbumModel;
 import com.example.musicapp.Model.ArtistsModel;
 import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.OnAlbumClick;
 import com.example.musicapp.Model.OnArtistClick;
 import com.example.musicapp.Model.OnSongClick;
 import com.example.musicapp.Model.SongModel;
@@ -30,7 +33,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class HomePageFragment extends Fragment implements OnArtistClick, OnSongClick {
+public class HomePageFragment extends Fragment implements OnArtistClick, OnSongClick, OnAlbumClick {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     //my varible
@@ -38,6 +41,7 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
     RecyclerView recyclerViewNewsMusic;
     RecyclerView recyclerViewTopMusic;
     RecyclerView recyclerViewFavoriteSinger;
+    LinearLayout suggestSingerLayout;
 
     ImageSlider imageSlider;
 
@@ -56,7 +60,7 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
     private void effectNewsToday() {
         recyclerViewNewsToday.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         RecyclerView.Adapter adapterNewsToday;
-        adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrAlbum);
+        adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrAlbum,this);
         recyclerViewNewsToday.setAdapter(adapterNewsToday);
     }
 
@@ -82,6 +86,7 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
     private void effectSuggestSinger(View view){
         ImageView img;
         TextView nameSinger,descSinger;
+        suggestSingerLayout=(LinearLayout) view.findViewById(R.id.suggestSingerLayout);
         img=(ImageView) view.findViewById(R.id.imgSuggestSingerHomepage);
         nameSinger=(TextView) view.findViewById(R.id.nameSuggestSingerHomepage);
         descSinger=(TextView) view.findViewById(R.id.descSuggestSingerHomepage);
@@ -89,12 +94,18 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
                 .load(FireStoreDB.arrArtists.get(0).getAvatarUrl())
                 .into(img);
         nameSinger.setText(FireStoreDB.arrArtists.get(0).getArtistId());
+        suggestSingerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onArtistClick(FireStoreDB.arrArtists.get(0));
+            }
+        });
         descSinger.setText("đây là 1 ca sĩ trẻ đầy  tài năng và mang đột phá trong gout âm nhạc của mình.");
     }
     private  void effectTopHomePage(){
         RecyclerView.Adapter adapterTop;
         ArrayList<SongModel> arrTop = new ArrayList<>(FireStoreDB.arrSong.subList(0, Math.min(FireStoreDB.arrSong.size(), 5)));
-        adapterTop=new TopMusicHomePageAdapter(arrTop);
+        adapterTop=new TopMusicHomePageAdapter(arrTop,this);
         recyclerViewTopMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewTopMusic.setAdapter(adapterTop);
     }
@@ -134,7 +145,15 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
         intent.putExtra("songId", song.getSongId());
         startActivity(intent);
     }
-
+    @Override
+    public void OnAlbumClick(AlbumModel album) {
+        Bundle bundle = new Bundle();
+        bundle.putString("albumId", album.getAlbumId());
+        bundle.putString("albumimg", album.getImageUrl());
+        TopSongFragment topSongFragment=new TopSongFragment();
+        topSongFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, topSongFragment).addToBackStack(null).commit();
+    }
     public void onArtistClick(ArtistsModel artists) {
         Bundle bundle = new Bundle();
         bundle.putString("artistId", artists.getArtistId());

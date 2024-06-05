@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.musicapp.Model.OnSongClick;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
 import com.squareup.picasso.Picasso;
@@ -22,11 +23,14 @@ import java.util.ArrayList;
 
 public class TopMusicHomePageAdapter extends RecyclerView.Adapter<TopMusicHomePageAdapter.ViewHolder> {
     ArrayList<SongModel> arr;
-
+    private OnSongClick songClick;
     public TopMusicHomePageAdapter(ArrayList<SongModel> arr) {
         this.arr = arr;
     }
-
+    public TopMusicHomePageAdapter(ArrayList<SongModel> arr, OnSongClick songClick) {
+        this.arr = arr;
+        this.songClick = songClick;
+    }
     @NonNull
     @Override
     public TopMusicHomePageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,6 +46,12 @@ public class TopMusicHomePageAdapter extends RecyclerView.Adapter<TopMusicHomePa
         holder.title.setText(arr.get(position).getTitle());
         holder.desc.setText(arr.get(position).getArtistId());
         holder.stt.setText(Integer.toString(position+1));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                songClick.onSongClick(arr.get(position));
+            }
+        });
     }
     @Override
     public int getItemCount() {

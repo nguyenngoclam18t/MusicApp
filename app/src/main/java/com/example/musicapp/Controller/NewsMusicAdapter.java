@@ -35,7 +35,6 @@ public class NewsMusicAdapter extends RecyclerView.Adapter<NewsMusicAdapter.View
     @Override
     public NewsMusicAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate= LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_card_recyclevie_homepage,parent,false);
-
         return new ViewHolder(inflate);
     }
 

@@ -17,6 +17,7 @@ import com.example.musicapp.Model.AlbumModel;
 import com.example.musicapp.Model.ArtistsModel;
 import com.example.musicapp.Model.FireStoreDB;
 import com.example.musicapp.Model.FirestoreCallback;
+import com.example.musicapp.Model.OnAlbumClick;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
 
@@ -26,6 +27,11 @@ public class AlbumFragment extends Fragment {
     private RecyclerView recyclerView;
     private AlbumAdapter albumAdapter;
     private ArrayList<AlbumModel> albumList = new ArrayList<>();
+    private OnAlbumClick albumClick;
+
+    public AlbumFragment(OnAlbumClick albumClick) {
+        this.albumClick = albumClick;
+    }
 
     @Nullable
     @Override
@@ -47,14 +53,12 @@ public class AlbumFragment extends Fragment {
 
                 @Override
                 public void onSongsCallback(ArrayList<SongModel> songs) {}
-
                 @Override
                 public void onAlbumsCallback(ArrayList<AlbumModel> albums) {
                     albumList.clear();
                     albumList.addAll(albums);
-
                     if(albumAdapter == null) {
-                        albumAdapter = new AlbumAdapter(albumList);
+                        albumAdapter = new AlbumAdapter(albumList, albumClick);
                         recyclerView.setAdapter(albumAdapter);
                     }
                     else {
@@ -67,4 +71,6 @@ public class AlbumFragment extends Fragment {
             });
         }
     }
+
+
 }

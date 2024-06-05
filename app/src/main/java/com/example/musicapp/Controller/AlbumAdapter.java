@@ -11,18 +11,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicapp.Model.AlbumModel;
+import com.example.musicapp.Model.OnAlbumClick;
 import com.example.musicapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder> {
     private List<AlbumModel> albumList;
-
+    private OnAlbumClick albumClick;
     public AlbumAdapter(List<AlbumModel> albumList) {
         this.albumList = albumList;
     }
 
+    public AlbumAdapter(ArrayList<AlbumModel> albumList, OnAlbumClick albumClick) {
+
+        this.albumList = albumList;
+        this.albumClick=albumClick;
+    }
     @NonNull
     @Override
     public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,6 +41,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     public void onBindViewHolder(@NonNull AlbumViewHolder holder, int position) {
         AlbumModel album = albumList.get(position);
         holder.bind(album);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                albumClick.OnAlbumClick(album);
+            }
+        });
     }
 
     @Override

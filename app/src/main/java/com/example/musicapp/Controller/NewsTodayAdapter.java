@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicapp.Model.AlbumModel;
 import com.example.musicapp.Model.ArtistsModel;
+import com.example.musicapp.Model.OnAlbumClick;
+import com.example.musicapp.Model.OnSongClick;
+import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -20,11 +23,15 @@ import java.util.ArrayList;
 public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.ViewHolder> {
 
     private final ArrayList<AlbumModel> lst;
-
+    private OnAlbumClick albumClick;
     public NewsTodayAdapter(ArrayList<AlbumModel> lst) {
         this.lst = lst;
     }
+    public NewsTodayAdapter(ArrayList<AlbumModel> lst, OnAlbumClick albumClick) {
 
+        this.lst = lst;
+        this.albumClick=albumClick;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,7 +51,7 @@ public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.View
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAG", "đây là click "+albumModel.albumId);
+                albumClick.OnAlbumClick(albumModel);
             }
         });
     }
