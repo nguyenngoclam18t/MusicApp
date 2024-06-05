@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.musicapp.Model.GenreModel;
+import com.example.musicapp.Model.OnGenreClick;
 import com.example.musicapp.R;
 import com.google.android.material.card.MaterialCardView;
 
@@ -21,10 +22,11 @@ import java.util.Locale;
 public class GenreSongAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<GenreModel> mDataList;
-
-    public GenreSongAdapter(Context context, ArrayList<GenreModel> dataList) {
+    OnGenreClick onGenreClick;
+    public GenreSongAdapter(Context context, ArrayList<GenreModel> dataList, OnGenreClick onGenreClick) {
         mContext = context;
         mDataList = dataList;
+        this.onGenreClick=onGenreClick;
     }
 
     @Override
@@ -81,6 +83,14 @@ public class GenreSongAdapter extends BaseAdapter {
         } else {
             viewHolder.img.setImageResource(R.drawable.son_tung_mtp);
         }
+        viewHolder.Card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onGenreClick != null) {
+                    onGenreClick.OnGenreClick(mDataList.get(position));
+                }
+            }
+        });
         return convertView;
     }
 

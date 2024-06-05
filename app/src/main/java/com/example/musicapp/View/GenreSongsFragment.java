@@ -12,6 +12,8 @@ import android.widget.GridView;
 
 import com.example.musicapp.Controller.GenreSongAdapter;
 import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.GenreModel;
+import com.example.musicapp.Model.OnGenreClick;
 import com.example.musicapp.R;
 
 /**
@@ -19,14 +21,13 @@ import com.example.musicapp.R;
  * Use the {@link GenreSongsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GenreSongsFragment extends Fragment {
+public class GenreSongsFragment extends Fragment implements OnGenreClick {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
     GridLayout gridGenre ;
@@ -72,9 +73,17 @@ public class GenreSongsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_genre_songs, container, false);
         gridGenre=(GridLayout) view.findViewById(R.id.GridlayoutGenreSongs);
-        GenreSongAdapter adapter=new GenreSongAdapter(getContext(), FireStoreDB.arrGenre);
+        GenreSongAdapter adapter=new GenreSongAdapter(getContext(), FireStoreDB.arrGenre,this);
         populateGridLayout(adapter);
-        // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void OnGenreClick(GenreModel genre) {
+        Bundle bundle = new Bundle();
+        bundle.putString("GenreName", genre.GenreName);
+        SearchFragment searchFragment=new SearchFragment();
+        searchFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, searchFragment).addToBackStack(null).commit();
     }
 }
