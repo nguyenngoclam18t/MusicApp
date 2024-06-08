@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.musicapp.Model.AlbumModel;
 import com.example.musicapp.Model.ArtistsModel;
 import com.example.musicapp.Model.FireStoreDB;
 import com.example.musicapp.Model.FirestoreCallback;
 import com.example.musicapp.Model.SongModel;
+import com.example.musicapp.Model.ZingMp3Api;
 import com.example.musicapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -18,12 +20,26 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class LoadingScreen extends AppCompatActivity implements FirestoreCallback {
-
+    private ZingMp3Api zingMp3Api;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
+        new Thread(() -> {
+            try {
+                String songData = String.valueOf(zingMp3Api.getDetailPlaylist("Z77CB8BA"));
+                runOnUiThread(() -> {
+                    // Xử lý dữ liệu songData trên UI thread
+                    Log.d("ZingMp3Api", songData.toString());
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
         FireStoreDB.initializeData(this);
+        zingMp3Api = new ZingMp3Api();
+
+
     }
     @Override
     public void onCallback() {
