@@ -25,9 +25,10 @@ public class LoadingScreen extends AppCompatActivity implements FirestoreCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
+        zingMp3Api = new ZingMp3Api();
         new Thread(() -> {
             try {
-                String songData = String.valueOf(zingMp3Api.getDetailPlaylist("Z77CB8BA"));
+                String songData = String.valueOf(zingMp3Api.getTop100());
                 runOnUiThread(() -> {
                     // Xử lý dữ liệu songData trên UI thread
                     Log.d("ZingMp3Api", songData.toString());
@@ -36,9 +37,7 @@ public class LoadingScreen extends AppCompatActivity implements FirestoreCallbac
                 e.printStackTrace();
             }
         }).start();
-        FireStoreDB.initializeData(this);
-        zingMp3Api = new ZingMp3Api();
-
+        //FireStoreDB.initializeData(this);
 
     }
     @Override
