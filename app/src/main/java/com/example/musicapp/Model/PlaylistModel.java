@@ -3,17 +3,20 @@ package com.example.musicapp.Model;
 public class PlaylistModel {
     private String PlaylistId;
     private String PlaylistName;
+
     private String thumbnailLm;
     private String releaseDate;
+    private String sortDescription;
     public PlaylistModel() {
 
     }
 
-    public PlaylistModel(String playlistId, String playlistName, String thumbnailLm, String releaseDate) {
+    public PlaylistModel(String playlistId, String playlistName, String thumbnailLm, String releaseDate, String sortDescription) {
         PlaylistId = playlistId;
         PlaylistName = playlistName;
         this.thumbnailLm = thumbnailLm;
         this.releaseDate = releaseDate;
+        this.sortDescription = sortDescription;
     }
 
     public String getPlaylistId() {
@@ -46,5 +49,13 @@ public class PlaylistModel {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getSortDescription() {
+        return sortDescription;
+    }
+
+    public void setSortDescription(String sortDescription) {
+        this.sortDescription = sortDescription;
     }
 }

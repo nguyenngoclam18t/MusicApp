@@ -11,6 +11,11 @@
         android:title="Xếp Hạng"
         />
     <item
+        android:id="@+id/navigation_Search"
+        android:icon="@drawable/search"
+        android:title="Tìm kiếm"
+        />
+    <item
         android:id="@+id/navigation_Profile"
         android:icon="@drawable/profileicon"
         android:title="Tôi"

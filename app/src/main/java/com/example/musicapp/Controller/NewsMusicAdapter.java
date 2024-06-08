@@ -46,11 +46,12 @@ public class NewsMusicAdapter extends RecyclerView.Adapter<NewsMusicAdapter.View
     @Override
     public void onBindViewHolder(@NonNull NewsMusicAdapter.ViewHolder holder, int position) {
         SongModel song = arr.get(position);
-//        Picasso.get()
-//                .load(arr.get(position).getImgUrl())
-//                .into(holder.img);
-//        holder.title.setText(arr.get(position).getTitle());
-//        holder.singer.setText(arr.get(position).getArtistId());
+        Picasso.get()
+                .load(song.getThumbnailLm())
+                .into(holder.img);
+        holder.title.setText(song.getTitle());
+        holder.singer.setText(song.getArtistsNames());
+        holder.release.setText(song.getReleaseDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,13 +67,14 @@ public class NewsMusicAdapter extends RecyclerView.Adapter<NewsMusicAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView img;
-        TextView title,singer;
+        TextView title,singer,release;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img=(ImageView)itemView.findViewById(R.id.imgCardHomePage);
             title=(TextView) itemView.findViewById(R.id.titleCardHomePage);
             singer=(TextView)itemView.findViewById(R.id.descCardHomePage);
+            release=(TextView)itemView.findViewById(R.id.DateCardHomePage);
 
         }
     }

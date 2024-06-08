@@ -40,16 +40,17 @@ public class TopMusicHomePageAdapter extends RecyclerView.Adapter<TopMusicHomePa
 
     @Override
     public void onBindViewHolder(@NonNull TopMusicHomePageAdapter.ViewHolder holder, int position) {
-//        Picasso.get()
-//                .load(arr.get(position).getImgUrl())
-//                .into(holder.img);
-//        holder.title.setText(arr.get(position).getTitle());
-//        holder.desc.setText(arr.get(position).getArtistId());
+        SongModel songModel=arr.get(position);
+        Picasso.get()
+                .load(songModel.getThumbnailLm())
+                .into(holder.img);
+        holder.title.setText(songModel.getTitle());
+        holder.desc.setText(songModel.getArtistsNames());
         holder.stt.setText(Integer.toString(position+1));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                songClick.onSongClick(arr.get(position));
+                    songClick.onSongClick(songModel);
             }
         });
     }

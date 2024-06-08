@@ -16,6 +16,7 @@ import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.Model.ZingMp3Api;
 import com.example.musicapp.R;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
@@ -33,6 +34,7 @@ public class LoadingScreen extends AppCompatActivity  {
 
         new Thread(() -> {
             try {
+
                 JsonObject songData = zingMp3Api.getHome();
                 JsonObject itemsarr=songData.getAsJsonObject("data");
                 JsonArray data=itemsarr.getAsJsonArray("items");
@@ -52,21 +54,23 @@ public class LoadingScreen extends AppCompatActivity  {
     }
     public void getBanner(@NonNull JsonObject data){
         JsonArray arr=data.getAsJsonArray("items");
-        for (int i=0;i<arr.size();i++){
-            JsonObject object= (JsonObject) arr.get(i);
-            ApiCollectionHomePage.arrBanner.add(String.valueOf(object.get("banner")));
+        for (JsonElement element :arr){
+            JsonObject itemObj = element.getAsJsonObject();
+            String banner= itemObj.get("banner").getAsString();
+            ApiCollectionHomePage.arrBanner.add(String.valueOf(banner));
         }
     }
     public void getSong(@NonNull JsonObject data){
         JsonObject item=data.getAsJsonObject("items");
         JsonArray arr=item.getAsJsonArray("all");
-        for (int i=0;i<arr.size();i++){
-            JsonObject object= (JsonObject) arr.get(i);
-            String encodeId= String.valueOf(object.get("encodeId"));
-            String title= String.valueOf(object.get("title"));
-            String thumbnailM= String.valueOf(object.get("thumbnailM"));
-            String artistsNames= String.valueOf(object.get("artistsNames"));
-            long timestamp = object.get("releaseDate").getAsLong();
+        for (JsonElement element :arr){
+            JsonObject itemObj = element.getAsJsonObject();
+
+            String encodeId= itemObj.get("encodeId").getAsString();
+            String title= itemObj.get("title").getAsString();
+            String thumbnailM= itemObj.get("thumbnailM").getAsString();
+            String artistsNames= itemObj.get("artistsNames").getAsString();
+            long timestamp = itemObj.get("releaseDate").getAsLong();
             Date date = new Date(timestamp * 1000);
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             String dateString = sdf.format(date);
@@ -75,12 +79,13 @@ public class LoadingScreen extends AppCompatActivity  {
     }
     public void getPlayList(@NonNull JsonObject data, ArrayList<PlaylistModel> modelArrayList){
         JsonArray arr=data.getAsJsonArray("items");
-        for (int i=0;i<arr.size();i++){
-            JsonObject object= (JsonObject) arr.get(i);
-            String encodeId= String.valueOf(object.get("encodeId"));
-            String title= String.valueOf(object.get("title"));
-            String thumbnailM= String.valueOf(object.get("thumbnailM"));
-            modelArrayList.add(new PlaylistModel(encodeId,title,thumbnailM,""));
+        for (JsonElement element :arr){
+            JsonObject itemObj = element.getAsJsonObject();
+            String encodeId= itemObj.get("encodeId").getAsString();
+            String title= itemObj.get("title").getAsString();
+            String thumbnailM= itemObj.get("thumbnailM").getAsString();
+            String sortDescription= itemObj.get("sortDescription").getAsString();
+            modelArrayList.add(new PlaylistModel(encodeId,title,thumbnailM,"",sortDescription));
         }
     }
     public void redirectHomePage() {

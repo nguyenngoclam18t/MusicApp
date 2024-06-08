@@ -59,7 +59,12 @@ public class Nav_Bar_Menu extends AppCompatActivity {
 
                     // Load Profile fragment or perform other actions
                     return true;
-                }
+                }  else if (id == R.id.navigation_Search) {
+                    loadFragment(new SearchFragment());
+
+                // Load Profile fragment or perform other actions
+                return true;
+            }
                 return false;
             }
         });

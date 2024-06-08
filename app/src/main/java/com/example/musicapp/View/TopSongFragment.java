@@ -1,6 +1,7 @@
 package com.example.musicapp.View;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,15 +12,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.musicapp.Controller.TopMusicHomePageAdapter;
 import com.example.musicapp.Model.ApiCollectionHomePage;
+import com.example.musicapp.Model.ArtistsModel;
 import com.example.musicapp.Model.OnSongClick;
 import com.example.musicapp.Model.SongModel;
+import com.example.musicapp.Model.ZingMp3Api;
 import com.example.musicapp.R;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +46,9 @@ public class TopSongFragment extends Fragment implements OnSongClick {
     private String mParam2;
     RecyclerView recyclerViewTopSongFragment;
     String ablumid;
+    TextView titlePlayList;
     ImageView img;
+    ZingMp3Api zingMp3Api=new ZingMp3Api();
     public TopSongFragment() {
         // Required empty public constructor
     }
@@ -61,29 +71,56 @@ public class TopSongFragment extends Fragment implements OnSongClick {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     public void getTopToRecycleView(){
         Bundle bundle = getArguments();
+        String albumId;
+        if (bundle != null) {
+            albumId = bundle.getString("albumId");
+        } else {
+            albumId = "Z6CZO0F6";
+        }
+        new Thread(() -> {
+            try {
+                ArrayList<SongModel> arrTop=new ArrayList<>();
+                JsonObject songData = zingMp3Api.getDetailPlaylist(albumId);
+                JsonObject items = songData.getAsJsonObject("data");
 
-        ArrayList<SongModel> arrTop=new ArrayList<>();
-        RecyclerView.Adapter adapterTop;
-//        if (bundle == null) {
-//            arrTop = new ArrayList<>(ApiCollectionHomePage.arrSong.subList(0, Math.min(ApiCollectionHomePage.arrSong.size(), 10)));
-//        } else {
-//            String albumId = bundle.getString("albumId");
-//            String albumimg = bundle.getString("albumimg");
-//            Picasso.get()
-//                    .load(albumimg)
-//                    .placeholder(R.drawable.todays_top_hits)
-//                    .into(img);
-//            for (SongModel song : ApiCollectionHomePage.arrSong) {
-//                if (song.getAlbumId() != null && song.getAlbumId().equals(albumId)) {
-//                    arrTop.add(song);
-//                }
-//            }
-//        }
-        adapterTop=new TopMusicHomePageAdapter(arrTop,this);
-        recyclerViewTopSongFragment.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerViewTopSongFragment.setAdapter(adapterTop);
+                String titlePlaylist=items.get("title").getAsString();
+                String thumbnailMPlayList=items.get("thumbnailM").getAsString();
+                JsonObject Song = items.getAsJsonObject("song");
+                JsonArray arrSong = Song.getAsJsonArray("items");
+                for (JsonElement element :arrSong){
+                    JsonObject itemObj = element.getAsJsonObject();
+
+                    String encodeId= itemObj.get("encodeId").getAsString();
+                    String title= itemObj.get("title").getAsString();
+                    String thumbnailM= itemObj.get("thumbnailM").getAsString();
+                    String artistsNames= itemObj.get("artistsNames").getAsString();
+                    long timestamp = itemObj.get("releaseDate").getAsLong();
+                    Date date = new Date(timestamp * 1000);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    String dateString = sdf.format(date);
+                    arrTop.add(new SongModel(encodeId,title,artistsNames,dateString,thumbnailM));
+                }
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        Picasso.get()
+                            .load(thumbnailMPlayList)
+                            .placeholder(R.drawable.todays_top_hits)
+                            .into(img);
+                        titlePlayList.setText(titlePlaylist);
+                        RecyclerView.Adapter adapterTop;
+                        adapterTop=new TopMusicHomePageAdapter(arrTop,this);
+                        recyclerViewTopSongFragment.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                        recyclerViewTopSongFragment.setAdapter(adapterTop);
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
 
     }
     @Override
@@ -92,7 +129,8 @@ public class TopSongFragment extends Fragment implements OnSongClick {
         View view=inflater.inflate(R.layout.fragment_top_song, container, false);
         recyclerViewTopSongFragment = (RecyclerView) view.findViewById(R.id.RecyclerViewTopSongFragment);
         img=(ImageView)view.findViewById(R.id.imageBackground);
-        // Inflate the layout for this fragment
+        titlePlayList=(TextView) view.findViewById(R.id.TitlePlaylistTopSong);
+
         getTopToRecycleView();
         return view;
     }

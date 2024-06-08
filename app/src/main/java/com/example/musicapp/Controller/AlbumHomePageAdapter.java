@@ -16,14 +16,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.ViewHolder> {
+public class AlbumHomePageAdapter extends RecyclerView.Adapter<AlbumHomePageAdapter.ViewHolder> {
 
     private final ArrayList<PlaylistModel> lst;
     private OnAlbumClick albumClick;
-    public NewsTodayAdapter(ArrayList<PlaylistModel> lst) {
+    public AlbumHomePageAdapter(ArrayList<PlaylistModel> lst) {
         this.lst = lst;
     }
-    public NewsTodayAdapter(ArrayList<PlaylistModel> lst, OnAlbumClick albumClick) {
+    public AlbumHomePageAdapter(ArrayList<PlaylistModel> lst, OnAlbumClick albumClick) {
 
         this.lst = lst;
         this.albumClick=albumClick;
@@ -39,11 +39,15 @@ public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PlaylistModel playlistModel =lst.get(position);
 
-//        Picasso.get()
-//                .load(playlistModel.getImageUrl())
-//                .placeholder(R.drawable.loading)
-//                .into(holder.img);
-//        holder.title.setText(playlistModel.albumId);
+        Picasso.get()
+                .load(playlistModel.getThumbnailLm())
+                .placeholder(R.drawable.loading)
+                .into(holder.img);
+        if(playlistModel.getSortDescription().isEmpty()){
+            holder.title.setText(playlistModel.getPlaylistName());
+        }else {
+            holder.title.setText(playlistModel.getSortDescription());
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
