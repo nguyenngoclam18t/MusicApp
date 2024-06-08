@@ -46,11 +46,11 @@ public class NewsMusicAdapter extends RecyclerView.Adapter<NewsMusicAdapter.View
     @Override
     public void onBindViewHolder(@NonNull NewsMusicAdapter.ViewHolder holder, int position) {
         SongModel song = arr.get(position);
-        Picasso.get()
-                .load(arr.get(position).getImgUrl())
-                .into(holder.img);
-        holder.title.setText(arr.get(position).getTitle());
-        holder.singer.setText(arr.get(position).getArtistId());
+//        Picasso.get()
+//                .load(arr.get(position).getImgUrl())
+//                .into(holder.img);
+//        holder.title.setText(arr.get(position).getTitle());
+//        holder.singer.setText(arr.get(position).getArtistId());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -21,9 +21,9 @@ import com.example.musicapp.Controller.FarvoriteSingerAdapter;
 import com.example.musicapp.Controller.NewsMusicAdapter;
 import com.example.musicapp.Controller.NewsTodayAdapter;
 import com.example.musicapp.Controller.TopMusicHomePageAdapter;
-import com.example.musicapp.Model.AlbumModel;
+import com.example.musicapp.Model.PlaylistModel;
 import com.example.musicapp.Model.ArtistsModel;
-import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.ApiCollectionHomePage;
 import com.example.musicapp.Model.OnAlbumClick;
 import com.example.musicapp.Model.OnArtistClick;
 import com.example.musicapp.Model.OnSongClick;
@@ -58,62 +58,59 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
     }
 
     private void effectNewsToday() {
-        recyclerViewNewsToday.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        RecyclerView.Adapter adapterNewsToday;
-        adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrAlbum,this);
-        recyclerViewNewsToday.setAdapter(adapterNewsToday);
+//        recyclerViewNewsToday.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//        RecyclerView.Adapter adapterNewsToday;
+//        adapterNewsToday = new NewsTodayAdapter(ApiCollectionHomePage.arrAlbum,this);
+//        recyclerViewNewsToday.setAdapter(adapterNewsToday);
     }
 
     private void effectSlider() {
         // slider
         ArrayList<SlideModel> arrSlider = new ArrayList<>();
-        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
+        for (String item: ApiCollectionHomePage.arrBanner) {
+            arrSlider.add(new SlideModel(item, ScaleTypes.CENTER_CROP));
+        }
         imageSlider.setImageList(arrSlider, ScaleTypes.CENTER_CROP);
     }
 
     private void effectNewsMusic() {
-        ArrayList<SongModel> arrNewsSongs = new ArrayList<>(FireStoreDB.arrSong.subList(0, Math.min(FireStoreDB.arrSong.size(), 15)));
-        RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs, this);
-        recyclerViewNewsMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewNewsMusic.setAdapter(adapterNewsMusic);
+//        ArrayList<SongModel> arrNewsSongs = new ArrayList<>(ApiCollectionHomePage.arrSong.subList(0, Math.min(ApiCollectionHomePage.arrSong.size(), 15)));
+//        RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs, this);
+//        recyclerViewNewsMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//        recyclerViewNewsMusic.setAdapter(adapterNewsMusic);
 
     }
     private void effectSuggestSinger(View view){
-        ImageView img;
-        TextView nameSinger,descSinger;
-        suggestSingerLayout=(LinearLayout) view.findViewById(R.id.suggestSingerLayout);
-        img=(ImageView) view.findViewById(R.id.imgSuggestSingerHomepage);
-        nameSinger=(TextView) view.findViewById(R.id.nameSuggestSingerHomepage);
-        descSinger=(TextView) view.findViewById(R.id.descSuggestSingerHomepage);
-        Picasso.get()
-                .load(FireStoreDB.arrArtists.get(0).getAvatarUrl())
-                .into(img);
-        nameSinger.setText(FireStoreDB.arrArtists.get(0).getArtistId());
-        suggestSingerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onArtistClick(FireStoreDB.arrArtists.get(0));
-            }
-        });
-        descSinger.setText("đây là 1 ca sĩ trẻ đầy  tài năng và mang đột phá trong gout âm nhạc của mình.");
+//        ImageView img;
+//        TextView nameSinger,descSinger;
+//        suggestSingerLayout=(LinearLayout) view.findViewById(R.id.suggestSingerLayout);
+//        img=(ImageView) view.findViewById(R.id.imgSuggestSingerHomepage);
+//        nameSinger=(TextView) view.findViewById(R.id.nameSuggestSingerHomepage);
+//        descSinger=(TextView) view.findViewById(R.id.descSuggestSingerHomepage);
+//        Picasso.get()
+//                .load(ApiCollectionHomePage.arrArtists.get(0).getAvatarUrl())
+//                .into(img);
+//        nameSinger.setText(ApiCollectionHomePage.arrArtists.get(0).getArtistId());
+//        suggestSingerLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onArtistClick(ApiCollectionHomePage.arrArtists.get(0));
+//            }
+//        });
+//        descSinger.setText("đây là 1 ca sĩ trẻ đầy  tài năng và mang đột phá trong gout âm nhạc của mình.");
     }
     private  void effectTopHomePage(){
-        RecyclerView.Adapter adapterTop;
-        ArrayList<SongModel> arrTop = new ArrayList<>(FireStoreDB.arrSong.subList(0, Math.min(FireStoreDB.arrSong.size(), 5)));
-        adapterTop=new TopMusicHomePageAdapter(arrTop,this);
-        recyclerViewTopMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerViewTopMusic.setAdapter(adapterTop);
+//        RecyclerView.Adapter adapterTop;
+//        ArrayList<SongModel> arrTop = new ArrayList<>(ApiCollectionHomePage.arrSong.subList(0, Math.min(ApiCollectionHomePage.arrSong.size(), 5)));
+//        adapterTop=new TopMusicHomePageAdapter(arrTop,this);
+//        recyclerViewTopMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+//        recyclerViewTopMusic.setAdapter(adapterTop);
     }
     private  void effectFavoriteSinger(){
-        RecyclerView.Adapter adapterFavoriteSinger;
-        adapterFavoriteSinger=new FarvoriteSingerAdapter(FireStoreDB.arrArtists, this);
-        recyclerViewFavoriteSinger.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewFavoriteSinger.setAdapter(adapterFavoriteSinger);
+//        RecyclerView.Adapter adapterFavoriteSinger;
+//        adapterFavoriteSinger=new FarvoriteSingerAdapter(ApiCollectionHomePage.arrArtists, this);
+//        recyclerViewFavoriteSinger.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//        recyclerViewFavoriteSinger.setAdapter(adapterFavoriteSinger);
     }
     private void getArray(View view){
 
@@ -146,19 +143,19 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
         startActivity(intent);
     }
     @Override
-    public void OnAlbumClick(AlbumModel album) {
+    public void OnAlbumClick(PlaylistModel album) {
         Bundle bundle = new Bundle();
-        bundle.putString("albumId", album.getAlbumId());
-        bundle.putString("albumimg", album.getImageUrl());
+//        bundle.putString("albumId", album.getAlbumId());
+//        bundle.putString("albumimg", album.getImageUrl());
         TopSongFragment topSongFragment=new TopSongFragment();
         topSongFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, topSongFragment).addToBackStack(null).commit();
     }
     public void onArtistClick(ArtistsModel artists) {
         Bundle bundle = new Bundle();
-        bundle.putString("artistId", artists.getArtistId());
-        bundle.putString("artistName", artists.getArtistName());
-        bundle.putString("avatarUrl", artists.getAvatarUrl());
+//        bundle.putString("artistId", artists.getArtistId());
+//        bundle.putString("artistName", artists.getArtistName());
+//        bundle.putString("avatarUrl", artists.getAvatarUrl());
         ArtistProfileFragment artistProfileFragment = new ArtistProfileFragment();
         artistProfileFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, artistProfileFragment).addToBackStack(null).commit();

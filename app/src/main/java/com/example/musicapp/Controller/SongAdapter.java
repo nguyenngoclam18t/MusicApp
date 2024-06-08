@@ -60,8 +60,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
         public void bind(SongModel song) {
             tvSongTitle.setText(song.getTitle());
-            tvArtist.setText(song.getArtistId());
-            Picasso.get().load(song.getImgUrl()).into(imgSong);
+//            tvArtist.setText(song.getArtistId());
+//            Picasso.get().load(song.getImgUrl()).into(imgSong);
         }
 
         @Override

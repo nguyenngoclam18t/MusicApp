@@ -3,23 +3,16 @@ package com.example.musicapp.Model;
 public class SongModel {
     private String songId;
     private String title;
-    private String artistId;
-    private String albumId;
-    private String genreId;
-    private String imgUrl;
-    private String songUrl;
+    private String artistsNames;
+    private String releaseDate;
+    private String thumbnailLm;
 
-    public SongModel() {
-    }
-
-    public SongModel(String songId, String title, String artistId, String albumId, String genreId, String imgUrl, String songUrl) {
+    public SongModel(String songId, String title, String artistsNames, String releaseDate, String thumbnailLm) {
         this.songId = songId;
         this.title = title;
-        this.artistId = artistId;
-        this.albumId = albumId;
-        this.genreId = genreId;
-        this.imgUrl = imgUrl;
-        this.songUrl = songUrl;
+        this.artistsNames = artistsNames;
+        this.releaseDate = releaseDate;
+        this.thumbnailLm = thumbnailLm;
     }
 
     public String getSongId() {
@@ -38,43 +31,27 @@ public class SongModel {
         this.title = title;
     }
 
-    public String getArtistId() {
-        return artistId;
+    public String getArtistsNames() {
+        return artistsNames;
     }
 
-    public void setArtistId(String artistId) {
-        this.artistId = artistId;
+    public void setArtistsNames(String artistsNames) {
+        this.artistsNames = artistsNames;
     }
 
-    public String getAlbumId() {
-        return albumId;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setAlbumId(String albumId) {
-        this.albumId = albumId;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
-    public String getGenreId() {
-        return genreId;
+    public String getThumbnailLm() {
+        return thumbnailLm;
     }
 
-    public void setGenreId(String genreId) {
-        this.genreId = genreId;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public String getSongUrl() {
-        return songUrl;
-    }
-
-    public void setSongUrl(String songUrl) {
-        this.songUrl = songUrl;
+    public void setThumbnailLm(String thumbnailLm) {
+        this.thumbnailLm = thumbnailLm;
     }
 }

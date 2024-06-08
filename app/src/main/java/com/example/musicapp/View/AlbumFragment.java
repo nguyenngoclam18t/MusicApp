@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.musicapp.Controller.AlbumAdapter;
-import com.example.musicapp.Model.AlbumModel;
+import com.example.musicapp.Model.PlaylistModel;
 import com.example.musicapp.Model.ArtistsModel;
-import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.ApiCollectionHomePage;
 import com.example.musicapp.Model.FirestoreCallback;
 import com.example.musicapp.Model.OnAlbumClick;
 import com.example.musicapp.Model.SongModel;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class AlbumFragment extends Fragment {
     private RecyclerView recyclerView;
     private AlbumAdapter albumAdapter;
-    private ArrayList<AlbumModel> albumList = new ArrayList<>();
+    private ArrayList<PlaylistModel> albumList = new ArrayList<>();
     private OnAlbumClick albumClick;
 
     public AlbumFragment(OnAlbumClick albumClick) {
@@ -47,28 +47,28 @@ public class AlbumFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             String artistId = bundle.getString("artistId");
-            FireStoreDB.getAlbumsByArtist(artistId, new FirestoreCallback() {
-                @Override
-                public void onCallback() {}
-
-                @Override
-                public void onSongsCallback(ArrayList<SongModel> songs) {}
-                @Override
-                public void onAlbumsCallback(ArrayList<AlbumModel> albums) {
-                    albumList.clear();
-                    albumList.addAll(albums);
-                    if(albumAdapter == null) {
-                        albumAdapter = new AlbumAdapter(albumList, albumClick);
-                        recyclerView.setAdapter(albumAdapter);
-                    }
-                    else {
-                        albumAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onArtistsCallback(ArrayList<ArtistsModel> artistsList) {}
-            });
+//            ApiCollectionHomePage.getAlbumsByArtist(artistId, new FirestoreCallback() {
+//                @Override
+//                public void onCallback() {}
+//
+//                @Override
+//                public void onSongsCallback(ArrayList<SongModel> songs) {}
+//                @Override
+//                public void onAlbumsCallback(ArrayList<PlaylistModel> albums) {
+//                    albumList.clear();
+//                    albumList.addAll(albums);
+//                    if(albumAdapter == null) {
+//                        albumAdapter = new AlbumAdapter(albumList, albumClick);
+//                        recyclerView.setAdapter(albumAdapter);
+//                    }
+//                    else {
+//                        albumAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//
+//                @Override
+//                public void onArtistsCallback(ArrayList<ArtistsModel> artistsList) {}
+//            });
         }
     }
 

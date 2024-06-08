@@ -47,17 +47,17 @@ public class GenreSongAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.viewholder_genres_song, parent, false);
-            viewHolder = new ViewHolder();
-            viewHolder.textView = convertView.findViewById(R.id.titleGenre);
-            viewHolder.img = convertView.findViewById(R.id.imageGenre);
-            viewHolder.Card = convertView.findViewById(R.id.GenreCard);
-            convertView.setTag(viewHolder);
+//            convertView = LayoutInflater.from(mContext).inflate(R.layout.viewholder_genres_song, parent, false);
+//            viewHolder = new ViewHolder();
+//            viewHolder.textView = convertView.findViewById(R.id.titleGenre);
+//            viewHolder.img = convertView.findViewById(R.id.imageGenre);
+//            viewHolder.Card = convertView.findViewById(R.id.GenreCard);
+//            convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         String text = mDataList.get(position).GenreName;
-        viewHolder.textView.setText(text);
+//        viewHolder.textView.setText(text);
         String[] arrColors = {
                 "#FBA3D1",
                 "#EBA3FB",
@@ -73,13 +73,13 @@ public class GenreSongAdapter extends BaseAdapter {
         };
         int positionColor = position % arrColors.length;
         String colorString = arrColors[positionColor];
-        viewHolder.Card.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(colorString)));
+//        viewHolder.Card.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(colorString)));
         String imageName = mDataList.get(position).GenreName.toLowerCase(Locale.ROOT); // Tên ảnh lưu trong drawable
         int imageResId = mContext.getResources().getIdentifier(imageName, "drawable", mContext.getPackageName());
         if (imageResId != 0) {
-            viewHolder.img.setImageResource(imageResId);
+//            viewHolder.img.setImageResource(imageResId);
         } else {
-            viewHolder.img.setImageResource(R.drawable.son_tung_mtp);
+//            viewHolder.img.setImageResource(R.drawable.son_tung_mtp);
         }
         return convertView;
     }

@@ -1,9 +1,6 @@
 package com.example.musicapp.View;
 
-import static android.content.Intent.getIntent;
-
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,10 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.musicapp.Controller.TopMusicHomePageAdapter;
-import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.ApiCollectionHomePage;
 import com.example.musicapp.Model.OnSongClick;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
@@ -70,21 +66,21 @@ public class TopSongFragment extends Fragment implements OnSongClick {
 
         ArrayList<SongModel> arrTop=new ArrayList<>();
         RecyclerView.Adapter adapterTop;
-        if (bundle == null) {
-            arrTop = new ArrayList<>(FireStoreDB.arrSong.subList(0, Math.min(FireStoreDB.arrSong.size(), 10)));
-        } else {
-            String albumId = bundle.getString("albumId");
-            String albumimg = bundle.getString("albumimg");
-            Picasso.get()
-                    .load(albumimg)
-                    .placeholder(R.drawable.todays_top_hits)
-                    .into(img);
-            for (SongModel song : FireStoreDB.arrSong) {
-                if (song.getAlbumId() != null && song.getAlbumId().equals(albumId)) {
-                    arrTop.add(song);
-                }
-            }
-        }
+//        if (bundle == null) {
+//            arrTop = new ArrayList<>(ApiCollectionHomePage.arrSong.subList(0, Math.min(ApiCollectionHomePage.arrSong.size(), 10)));
+//        } else {
+//            String albumId = bundle.getString("albumId");
+//            String albumimg = bundle.getString("albumimg");
+//            Picasso.get()
+//                    .load(albumimg)
+//                    .placeholder(R.drawable.todays_top_hits)
+//                    .into(img);
+//            for (SongModel song : ApiCollectionHomePage.arrSong) {
+//                if (song.getAlbumId() != null && song.getAlbumId().equals(albumId)) {
+//                    arrTop.add(song);
+//                }
+//            }
+//        }
         adapterTop=new TopMusicHomePageAdapter(arrTop,this);
         recyclerViewTopSongFragment.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerViewTopSongFragment.setAdapter(adapterTop);

@@ -1,6 +1,5 @@
 package com.example.musicapp.Controller;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.musicapp.Model.AlbumModel;
-import com.example.musicapp.Model.ArtistsModel;
+import com.example.musicapp.Model.PlaylistModel;
 import com.example.musicapp.Model.OnAlbumClick;
-import com.example.musicapp.Model.OnSongClick;
-import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -22,12 +18,12 @@ import java.util.ArrayList;
 
 public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.ViewHolder> {
 
-    private final ArrayList<AlbumModel> lst;
+    private final ArrayList<PlaylistModel> lst;
     private OnAlbumClick albumClick;
-    public NewsTodayAdapter(ArrayList<AlbumModel> lst) {
+    public NewsTodayAdapter(ArrayList<PlaylistModel> lst) {
         this.lst = lst;
     }
-    public NewsTodayAdapter(ArrayList<AlbumModel> lst, OnAlbumClick albumClick) {
+    public NewsTodayAdapter(ArrayList<PlaylistModel> lst, OnAlbumClick albumClick) {
 
         this.lst = lst;
         this.albumClick=albumClick;
@@ -41,17 +37,17 @@ public class NewsTodayAdapter extends RecyclerView.Adapter<NewsTodayAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        AlbumModel albumModel=lst.get(position);
+        PlaylistModel playlistModel =lst.get(position);
 
-        Picasso.get()
-                .load(albumModel.getImageUrl())
-                .placeholder(R.drawable.loading)
-                .into(holder.img);
-        holder.title.setText(albumModel.albumId);
+//        Picasso.get()
+//                .load(playlistModel.getImageUrl())
+//                .placeholder(R.drawable.loading)
+//                .into(holder.img);
+//        holder.title.setText(playlistModel.albumId);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                albumClick.OnAlbumClick(albumModel);
+                albumClick.OnAlbumClick(playlistModel);
             }
         });
     }

@@ -1,38 +1,48 @@
 package com.example.musicapp.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 
-import com.example.musicapp.Model.AlbumModel;
+import com.example.musicapp.Model.ApiCollectionHomePage;
+import com.example.musicapp.Model.PlaylistModel;
 import com.example.musicapp.Model.ArtistsModel;
-import com.example.musicapp.Model.FireStoreDB;
 import com.example.musicapp.Model.FirestoreCallback;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.Model.ZingMp3Api;
 import com.example.musicapp.R;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class LoadingScreen extends AppCompatActivity implements FirestoreCallback {
+public class LoadingScreen extends AppCompatActivity  {
     private ZingMp3Api zingMp3Api;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
         zingMp3Api = new ZingMp3Api();
+
         new Thread(() -> {
             try {
-                String songData = String.valueOf(zingMp3Api.getTop100());
-                runOnUiThread(() -> {
-                    // Xử lý dữ liệu songData trên UI thread
-                    Log.d("ZingMp3Api", songData.toString());
-                });
+                JsonObject songData = zingMp3Api.getHome();
+                JsonObject itemsarr=songData.getAsJsonObject("data");
+                JsonArray data=itemsarr.getAsJsonArray("items");
+                getBanner((JsonObject) data.get(0));
+                getSong((JsonObject) data.get(2));
+                getPlayList((JsonObject) data.get(3),ApiCollectionHomePage.arrPlaylistSummer);
+                getPlayList((JsonObject) data.get(4),ApiCollectionHomePage.arrPlaylistChill);
+                getPlayList((JsonObject) data.get(5),ApiCollectionHomePage.arrPlaylistRemix);
+                getPlayList((JsonObject) data.get(10),ApiCollectionHomePage.arrPlaylistHot);
+                redirectHomePage();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -40,42 +50,73 @@ public class LoadingScreen extends AppCompatActivity implements FirestoreCallbac
         //FireStoreDB.initializeData(this);
 
     }
-    @Override
-    public void onCallback() {
+    public void getBanner(@NonNull JsonObject data){
+        JsonArray arr=data.getAsJsonArray("items");
+        for (int i=0;i<arr.size();i++){
+            JsonObject object= (JsonObject) arr.get(i);
+            ApiCollectionHomePage.arrBanner.add(String.valueOf(object.get("banner")));
+        }
+    }
+    public void getSong(@NonNull JsonObject data){
+        JsonObject item=data.getAsJsonObject("items");
+        JsonArray arr=item.getAsJsonArray("all");
+        for (int i=0;i<arr.size();i++){
+            JsonObject object= (JsonObject) arr.get(i);
+            String encodeId= String.valueOf(object.get("encodeId"));
+            String title= String.valueOf(object.get("title"));
+            String thumbnailM= String.valueOf(object.get("thumbnailM"));
+            String artistsNames= String.valueOf(object.get("artistsNames"));
+            long timestamp = object.get("releaseDate").getAsLong();
+            Date date = new Date(timestamp * 1000);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String dateString = sdf.format(date);
+            ApiCollectionHomePage.arrSongNewRelease.add(new SongModel(encodeId,title,artistsNames,dateString,thumbnailM));
+        }
+    }
+    public void getPlayList(@NonNull JsonObject data, ArrayList<PlaylistModel> modelArrayList){
+        JsonArray arr=data.getAsJsonArray("items");
+        for (int i=0;i<arr.size();i++){
+            JsonObject object= (JsonObject) arr.get(i);
+            String encodeId= String.valueOf(object.get("encodeId"));
+            String title= String.valueOf(object.get("title"));
+            String thumbnailM= String.valueOf(object.get("thumbnailM"));
+            modelArrayList.add(new PlaylistModel(encodeId,title,thumbnailM,""));
+        }
+    }
+    public void redirectHomePage() {
         preloadImages();
         Intent intent = new Intent(LoadingScreen.this, Nav_Bar_Menu.class);
         startActivity(intent);
         finish();
     }
     private  void preloadImages(){
-        for (AlbumModel model:FireStoreDB.arrAlbum ) {
-            loadImage(model.imageUrl);
+        for (PlaylistModel model:ApiCollectionHomePage.arrPlaylistSummer ) {
+            loadImage(model.getThumbnailLm());
         }
-        for (ArtistsModel model:FireStoreDB.arrArtists ) {
-            loadImage(model.getAvatarUrl());
+        for (PlaylistModel model:ApiCollectionHomePage.arrPlaylistChill ) {
+            loadImage(model.getThumbnailLm());
+        }
+        for (PlaylistModel model:ApiCollectionHomePage.arrPlaylistHot ) {
+            loadImage(model.getThumbnailLm());
+        }
+        for (PlaylistModel model:ApiCollectionHomePage.arrPlaylistRemix ) {
+            loadImage(model.getThumbnailLm());
+        }
+        for (SongModel model:ApiCollectionHomePage.arrSongNewRelease ) {
+            loadImage(model.getThumbnailLm());
+        }
+        for (String model:ApiCollectionHomePage.arrBanner ) {
+            loadImage(model);
         }
     }
     private void loadImage(String imageUrls) {
         Picasso.get().load(imageUrls).fetch();
     }
 
-    @Override
-    public void onSongsCallback(ArrayList<SongModel> songs) {
 
-    }
 
-    @Override
-    public void onAlbumsCallback(ArrayList<AlbumModel> album) {
-
-    }
-
-    @Override
-    public void onArtistsCallback(ArrayList<ArtistsModel> artists) {
-
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
+//    @Override
+//    public void onPointerCaptureChanged(boolean hasCapture) {
+//        super.onPointerCaptureChanged(hasCapture);
+//    }
 }

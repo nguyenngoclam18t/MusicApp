@@ -133,27 +133,27 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        db.collection("songs").document(songId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if (documentSnapshot != null && documentSnapshot.exists()) {
-                        SongModel song = documentSnapshot.toObject(SongModel.class);
-                        if (song != null) {
-                            songTitle.setText(song.getTitle());
-                            Picasso.get().load(song.getImgUrl()).into(songImage);
-                            getArtistName(song.getArtistId());
-                            playSong(song.getSongUrl());
-                        }
-                    } else {
-                        Log.d(TAG, "Document does not exist");
-                    }
-                } else {
-                    Log.d(TAG, "Error getting document: ", task.getException());
-                }
-            }
-        });
+//        db.collection("songs").document(songId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot documentSnapshot = task.getResult();
+//                    if (documentSnapshot != null && documentSnapshot.exists()) {
+//                        SongModel song = documentSnapshot.toObject(SongModel.class);
+//                        if (song != null) {
+//                            songTitle.setText(song.getTitle());
+//                            Picasso.get().load(song.getImgUrl()).into(songImage);
+//                            getArtistName(song.getArtistId());
+//                            playSong(song.getSongUrl());
+//                        }
+//                    } else {
+//                        Log.d(TAG, "Document does not exist");
+//                    }
+//                } else {
+//                    Log.d(TAG, "Error getting document: ", task.getException());
+//                }
+//            }
+//        });
     }
 
     private void getArtistName(String artistId) {

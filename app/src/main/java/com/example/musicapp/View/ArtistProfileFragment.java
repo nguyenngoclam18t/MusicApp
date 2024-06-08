@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,8 +13,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.musicapp.Controller.ViewPagerAdapter;
-import com.example.musicapp.Model.AlbumModel;
-import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.PlaylistModel;
+import com.example.musicapp.Model.ApiCollectionHomePage;
 import com.example.musicapp.Model.OnAlbumClick;
 import com.example.musicapp.R;
 import com.google.android.material.tabs.TabLayout;
@@ -29,7 +28,7 @@ public class ArtistProfileFragment extends Fragment implements OnAlbumClick {
     private ImageButton btnBack;
     private ImageView imgArtist;
     private TextView artistName;
-    FireStoreDB fireStoreDB = new FireStoreDB();
+    ApiCollectionHomePage fireStoreDB = new ApiCollectionHomePage();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -103,10 +102,10 @@ public class ArtistProfileFragment extends Fragment implements OnAlbumClick {
         return requestCreator.resize(targetWidth, targetHeight).centerCrop();
     }
     @Override
-    public void OnAlbumClick(AlbumModel album) {
+    public void OnAlbumClick(PlaylistModel album) {
         Bundle bundle = new Bundle();
-        bundle.putString("albumId", album.getAlbumName());
-        bundle.putString("albumimg", album.getImageUrl());
+//        bundle.putString("albumId", album.getAlbumName());
+//        bundle.putString("albumimg", album.getImageUrl());
         TopSongFragment topSongFragment=new TopSongFragment();
         topSongFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, topSongFragment).addToBackStack(null).commit();

@@ -12,13 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicapp.Controller.SongAdapter;
-import com.example.musicapp.Model.AlbumModel;
+import com.example.musicapp.Model.PlaylistModel;
 import com.example.musicapp.Model.ArtistsModel;
-import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.ApiCollectionHomePage;
 import com.example.musicapp.Model.FirestoreCallback;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,42 +33,42 @@ public class MusicFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        loadSongsByArtist();
+//        loadSongsByArtist();
         return view;
     }
 
-    private void loadSongsByArtist() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String artistId = bundle.getString("artistId");
-            FireStoreDB.getSongsByArtist(artistId, new FirestoreCallback() {
-                @Override
-                public void onCallback() {
-
-                }
-
-                @Override
-                public void onSongsCallback(ArrayList<SongModel> songs) {
-                    songList.clear();
-                    songList.addAll(songs);
-                    if (songAdapter == null) {
-                        songAdapter = new SongAdapter(songList);
-                        recyclerView.setAdapter(songAdapter);
-                    } else {
-                        songAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onAlbumsCallback(ArrayList<AlbumModel> album) {
-
-                }
-
-                @Override
-                public void onArtistsCallback(ArrayList<ArtistsModel> artistsList) {
-
-                }
-            });
-        }
-    }
+//    private void loadSongsByArtist() {
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            String artistId = bundle.getString("artistId");
+//            ApiCollectionHomePage.getSongsByArtist(artistId, new FirestoreCallback() {
+//                @Override
+//                public void onCallback() {
+//
+//                }
+//
+//                @Override
+//                public void onSongsCallback(ArrayList<SongModel> songs) {
+//                    songList.clear();
+//                    songList.addAll(songs);
+//                    if (songAdapter == null) {
+//                        songAdapter = new SongAdapter(songList);
+//                        recyclerView.setAdapter(songAdapter);
+//                    } else {
+//                        songAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//
+//                @Override
+//                public void onAlbumsCallback(ArrayList<PlaylistModel> album) {
+//
+//                }
+//
+//                @Override
+//                public void onArtistsCallback(ArrayList<ArtistsModel> artistsList) {
+//
+//                }
+//            });
+//        }
+//    }
 }

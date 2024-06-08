@@ -54,12 +54,7 @@ public class Nav_Bar_Menu extends AppCompatActivity {
 
                     // Load Top fragment or perform other actions
                     return true;
-                } else if (id == R.id.navigation_genres) {
-                    loadFragment(new GenreSongsFragment());
-
-                    // Load Cart fragment or perform other actions
-                    return true;
-                } else if (id == R.id.navigation_Profile) {
+                }  else if (id == R.id.navigation_Profile) {
                     //loadFragment(new HomePageFragment());
 
                     // Load Profile fragment or perform other actions
