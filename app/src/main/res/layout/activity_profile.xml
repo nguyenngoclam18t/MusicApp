@@ -24,8 +24,6 @@
                 android:src="@drawable/user"
                 android:scaleType="fitCenter"
                 />
-
-
         <LinearLayout
             android:layout_width="243dp"
             android:layout_height="match_parent"
@@ -42,12 +40,6 @@
                 android:text="Tên người dùng"
                 android:textAppearance="?attr/textAppearanceTitleLarge" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Người dùng phổ thông"
-                android:layout_marginBottom="30dp"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -179,20 +171,6 @@
             android:layout_marginStart="20dp"/>
 
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/chinhsuaBtn"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/round_back_primary_15"
-        android:text="Chỉnh sửa thông tin"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF" />
-
 
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.musicapp.Model.FirebaseAuthencation;
 import com.example.musicapp.R;
 
 public class Profile extends AppCompatActivity {
@@ -31,7 +32,16 @@ public class Profile extends AppCompatActivity {
             return insets;
 
         });
-
+//         FirebaseAuthencation. = FirebaseAuthencation.getInstance();
+//
+//// Lấy người dùng hiện tại
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//
+//        if (currentUser != null) {
+//            // Lấy UID của người dùng hiện tại
+//            String userUID = currentUser.getUid();
+//            // Sử dụng UID theo nhu cầu của bạn
+//            Log.d("FirebaseAuth", "Current user UID: " + userUID);
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
