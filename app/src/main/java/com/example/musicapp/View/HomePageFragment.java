@@ -78,7 +78,7 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
         imageSlider.setImageList(arrSlider, ScaleTypes.CENTER_CROP);
     }
 
-    private void effectNewsMusic( RecyclerView recycler, ArrayList<PlaylistModel> arrNewsSongs ) {
+    private void effectPlayList( RecyclerView recycler, ArrayList<PlaylistModel> arrNewsSongs ) {
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         RecyclerView.Adapter adapterPlayList;
         adapterPlayList = new AlbumHomePageAdapter(arrNewsSongs,this);
@@ -148,10 +148,10 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
 
         effectSlider();
         effectNewsRelease();
-        effectNewsMusic(recyclerViewChillPlayList,ApiCollectionHomePage.arrPlaylistChill);
-        effectNewsMusic(recyclerViewSummerPlayList,ApiCollectionHomePage.arrPlaylistSummer);
-        effectNewsMusic(recyclerViewRemixPlayList,ApiCollectionHomePage.arrPlaylistRemix);
-        effectNewsMusic(recyclerViewHotPlayList,ApiCollectionHomePage.arrPlaylistHot);
+        effectPlayList(recyclerViewChillPlayList,ApiCollectionHomePage.arrPlaylistChill);
+        effectPlayList(recyclerViewSummerPlayList,ApiCollectionHomePage.arrPlaylistSummer);
+        effectPlayList(recyclerViewRemixPlayList,ApiCollectionHomePage.arrPlaylistRemix);
+        effectPlayList(recyclerViewHotPlayList,ApiCollectionHomePage.arrPlaylistHot);
         effectSuggestSinger(view);
         return view;
     }
