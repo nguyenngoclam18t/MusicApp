@@ -104,7 +104,7 @@ public class ArtistProfileFragment extends Fragment implements OnAlbumClick {
     @Override
     public void OnAlbumClick(PlaylistModel album) {
         Bundle bundle = new Bundle();
-//        bundle.putString("albumId", album.getAlbumName());
+//zz        bundle.putString("albumId", album.getAlbumName());
 //        bundle.putString("albumimg", album.getImageUrl());
         TopSongFragment topSongFragment=new TopSongFragment();
         topSongFragment.setArguments(bundle);

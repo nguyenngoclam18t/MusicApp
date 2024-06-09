@@ -12,10 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicapp.Controller.SongAdapter;
-import com.example.musicapp.Model.PlaylistModel;
-import com.example.musicapp.Model.ArtistsModel;
-import com.example.musicapp.Model.ApiCollectionHomePage;
-import com.example.musicapp.Model.FirestoreCallback;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
 

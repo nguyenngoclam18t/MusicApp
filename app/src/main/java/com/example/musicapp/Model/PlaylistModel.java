@@ -3,7 +3,6 @@ package com.example.musicapp.Model;
 public class PlaylistModel {
     private String PlaylistId;
     private String PlaylistName;
-
     private String thumbnailLm;
     private String releaseDate;
     private String sortDescription;

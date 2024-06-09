@@ -14,11 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.musicapp.Controller.AlbumAdapter;
 import com.example.musicapp.Model.PlaylistModel;
-import com.example.musicapp.Model.ArtistsModel;
-import com.example.musicapp.Model.ApiCollectionHomePage;
-import com.example.musicapp.Model.FirestoreCallback;
 import com.example.musicapp.Model.OnAlbumClick;
-import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.R;
 
 import java.util.ArrayList;
