@@ -144,11 +144,21 @@ public class ZingMp3Api {
         qs.put("segmentId", "-1");
         qs.put("count", "30");
         qs.put("sig", hashParamHome("/api/v2/page/get/home"));
-
         String response = requestZingMp3("/api/v2/page/get/home", qs);
         return gson.fromJson(response, JsonObject.class);
     }
-
+    public JsonObject getListArtistPlaylist(String artistId, String page, String count) throws Exception {
+        Map<String, String> qs = new HashMap<>();
+        qs.put("id", artistId);
+        qs.put("type", "artist");
+        qs.put("page", page);
+        qs.put("count", count);
+        qs.put("sort", "new");
+        qs.put("sectionId", "aAlbum");
+        qs.put("sig", hashListMV("/api/v2/playlist/get/list", artistId, "artist", page, count));
+        String response = requestZingMp3("/api/v2/playlist/get/list", qs);
+        return gson.fromJson(response, JsonObject.class);
+    }
     public JsonObject getTop100() throws Exception {
         Map<String, String> qs = new HashMap<>();
         qs.put("sig", hashParamNoId("/api/v2/page/get/top-100"));

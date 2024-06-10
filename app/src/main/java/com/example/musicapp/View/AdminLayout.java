@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.musicapp.Controller.UserListAdminLayoutAdapter;
+import com.example.musicapp.Model.DataProfilePage;
 import com.example.musicapp.Model.OnItemLongClickListenerUser;
 import com.example.musicapp.Model.UserModel;
 import com.example.musicapp.R;
@@ -51,7 +53,13 @@ public class AdminLayout extends AppCompatActivity implements OnItemLongClickLis
         pass.setTransformationMethod(new PasswordTransformationMethod());
         layoutCreateUser = findViewById(R.id.layoutCreateUserAdminLy);
         recyclerViewUser = findViewById(R.id.RecyclerViewUser);
-
+        Button btnLogout=findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminLayout.this,Login.class));
+            }
+        });
         btnCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

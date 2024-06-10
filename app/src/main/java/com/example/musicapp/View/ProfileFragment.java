@@ -1,5 +1,6 @@
 package com.example.musicapp.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,7 +58,7 @@ public class ProfileFragment extends Fragment implements OnAlbumClick {
     private String mParam2;
     ImageView avatarUser;
     TextView nameUser;
-    Button updateInfor,btnUpdate;
+    Button updateInfor,btnUpdate,btnLogout;
     EditText fullname,email,number;
     LinearLayout layoutUpdate;
 
@@ -88,6 +89,7 @@ public class ProfileFragment extends Fragment implements OnAlbumClick {
         nameUser=(TextView) view.findViewById(R.id.UserNameProfile);
         recyclerViewFarvoritePlaylist=(RecyclerView) view.findViewById(R.id.RecyclerViewFarvoritePlaylist);
         updateInfor=(Button) view.findViewById(R.id.btnRedirectUpdateFragment);
+        btnLogout=(Button) view.findViewById(R.id.btnLogout);
         email=(EditText) view.findViewById(R.id.edtEmailUpdateInfor);
         fullname=(EditText) view.findViewById(R.id.edtFullNameUpdateInfor);
         number=(EditText) view.findViewById(R.id.edtNumberUpdateInfor);
@@ -112,6 +114,14 @@ public class ProfileFragment extends Fragment implements OnAlbumClick {
                 fullname.setText(DataProfilePage.userModel.getFullName());
                 number.setText(DataProfilePage.userModel.getMobile());
                 layoutUpdate.setVisibility(View.VISIBLE);
+            }
+        });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataProfilePage.arrFavoritePlaylist=new ArrayList<>();
+                DataProfilePage.userModel=new UserModel();
+                startActivity(new Intent(getActivity(),Login.class));
             }
         });
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +160,6 @@ public class ProfileFragment extends Fragment implements OnAlbumClick {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         Get(rootView);
         setEffect();
-
         return rootView;
     }
 

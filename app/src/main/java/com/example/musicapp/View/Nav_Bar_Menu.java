@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class Nav_Bar_Menu extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     FrameLayout framefragment;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,23 +70,8 @@ public class Nav_Bar_Menu extends AppCompatActivity {
                     // Load Top fragment or perform other actions
                     return true;
                 }  else if (id == R.id.navigation_Profile) {
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                    mAuth.signInWithEmailAndPassword("nguyenngoclam2k3d@gmail.com", "nguyenngoclam")
-                            .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    // Sign in success
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    handleAfterLogin(user);
-                                    GetInforUser();
+                    loadFragment(new ProfileFragment());
 
-                                } else {
-                                    Log.d("test", "onNavigationItemSelected: ");
-                                }
-                            });
-
-
-
-                    // Load Profile fragment or perform other actions
                     return true;
                 }  else if (id == R.id.navigation_Search) {
                     loadFragment(new SearchFragment());
@@ -98,88 +83,6 @@ public class Nav_Bar_Menu extends AppCompatActivity {
             }
         });
     }
-    void GetInforUser(){
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            synchronized (DataProfilePage.userModel) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                    String userId=document.getId();
-                                    if(userId.equals(DataProfilePage.userModel.getUserUid())){
-                                        DataProfilePage.userModel.setAvatarUrl(document.getString("avatarUrl"));
-                                        DataProfilePage.userModel.setEmail( document.getString("email"));
-                                        DataProfilePage.userModel.setFullName( document.getString("fullName"));
-                                        DataProfilePage.userModel.setMobile(document.getString("mobile"));
-                                    }
-                                }
-                                GetFavoriteList();
-                            }
-
-                        } else {
-                            Log.w("FirestoreData", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-    }
-
-    void fetchDataAlbum(){
-
-        new Thread(() -> {
-            try {
-                for (PlaylistModel model:DataProfilePage.arrFavoritePlaylist) {
-                    ZingMp3Api zingMp3Api=new ZingMp3Api();
-                    JsonObject data = zingMp3Api.getDetailPlaylist(model.getPlaylistId());
-                    JsonObject itemObj=data.getAsJsonObject("data");
-                    model.setPlaylistName(itemObj.get("title").getAsString());
-                    model.setThumbnailLm( itemObj.get("thumbnailM").getAsString());
-                    model.setSortDescription( itemObj.get("sortDescription").getAsString());
-                }
-                runOnUiThread(() -> loadFragment(new ProfileFragment()));
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
 
 
-    }
-
-    void GetFavoriteList(){
-        db.collection("FarvoritePlayList")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            synchronized (DataProfilePage.arrFavoritePlaylist) {
-                                DataProfilePage.arrFavoritePlaylist = new ArrayList<>();
-
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    String uid=document.getString("UserId");
-                                    if(uid.equals(DataProfilePage.userModel.getUserUid())){
-                                        String PlaylistID=document.getString("PlaylistID");
-                                        PlaylistModel model=new PlaylistModel();
-                                        model.setPlaylistId(PlaylistID);
-                                        DataProfilePage.arrFavoritePlaylist.add(model);
-                                    }
-                                }
-                                fetchDataAlbum();
-                            }
-
-                        } else {
-                            Log.w("FirestoreData", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-    }
-    private void handleAfterLogin(FirebaseUser user) {
-        if (user != null) {
-            DataProfilePage.userModel.setUserUid( user.getUid());
-
-        }
-    }
 }

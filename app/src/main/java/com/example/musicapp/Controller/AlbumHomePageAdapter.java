@@ -43,7 +43,7 @@ public class AlbumHomePageAdapter extends RecyclerView.Adapter<AlbumHomePageAdap
                 .load(playlistModel.getThumbnailLm())
                 .placeholder(R.drawable.loading)
                 .into(holder.img);
-        if(playlistModel.getSortDescription().isEmpty()){
+        if(playlistModel.getSortDescription()==null||playlistModel.getSortDescription().isEmpty()){
             holder.title.setText(playlistModel.getPlaylistName());
         }else {
             holder.title.setText(playlistModel.getSortDescription());
