@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_marginLeft="16dp"
             android:layout_width="match_parent"
@@ -22,27 +23,23 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:textAppearance="?attr/textAppearanceTitleLarge"
-                android:text="Search"/>
-
-
-
+                android:text="Search" />
         </LinearLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/searchTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:background="#FFFFFF"
-            android:layout_marginTop="20dp"
-            android:hint="Artists, songs or Album">
-
-            <com.google.android.material.textfield.TextInputEditText
+            android:layout_marginTop="20dp">
+            <SearchView
                 android:id="@+id/EdtSearchString"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white" />
-
-
+                android:background="@color/white"
+                android:imeOptions="actionSearch"
+                android:hint="Artists, songs or Album"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -89,5 +86,4 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-
 </androidx.core.widget.NestedScrollView>

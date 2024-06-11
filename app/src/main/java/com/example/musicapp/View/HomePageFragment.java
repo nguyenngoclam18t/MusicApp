@@ -159,22 +159,42 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
     @Override
     public void onSongClick(SongModel song) {
         Intent intent = new Intent(getContext(), PlayerActivity.class);
-        intent.putExtra("songId", song.getSongId());
+        intent.putExtra("encodeId", song.getSongId());
+        intent.putExtra("title", song.getTitle());
+        intent.putExtra("thumbnailM", song.getThumbnailLm());
+        intent.putExtra("artistsNames", song.getArtistsNames());
+        intent.putExtra("link", song.getSongUrl());
+        intent.putExtra("duration", song.getDuration());
         startActivity(intent);
     }
+
     @Override
     public void OnAlbumClick(PlaylistModel album) {
         Bundle bundle = new Bundle();
         bundle.putString("albumId", album.getPlaylistId());
-        TopSongFragment topSongFragment=new TopSongFragment();
+        bundle.putString("albumTitle", album.getPlaylistName());
+        bundle.putString("albumThumbnail", album.getThumbnailLm());
+        bundle.putString("albumDescription", album.getSortDescription());
+
+        TopSongFragment topSongFragment = new TopSongFragment();
         topSongFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, topSongFragment).addToBackStack(null).commit();
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.FrameHomePage, topSongFragment)
+                .addToBackStack(null)
+                .commit();
     }
-    public void onArtistClick(ArtistsModel artists) {
+
+
+    @Override
+    public void onArtistClick(ArtistsModel artist) {
         Bundle bundle = new Bundle();
-        bundle.putString("artistId", artists.getArtistId());
-        ArtistProfileFragment artistProfileFragment = new ArtistProfileFragment();
-        artistProfileFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, artistProfileFragment).addToBackStack(null).commit();
+        bundle.putString("artistId", artist.getArtistId());
+        bundle.putString("alias", artist.getArtistAliasName());
+        bundle.putString("artistName", artist.getArtistName());
+        bundle.putString("thumbnailLm", artist.getThumbnailLm());
+        ArtistProfileFragment fragment = new ArtistProfileFragment();
+        fragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, fragment).addToBackStack(null).commit();
     }
+
 }

@@ -22,16 +22,6 @@
             android:layout_height="45dp"
             android:src="@drawable/down_arrow"
             android:background="@null"/>
-
-        <TextView
-            android:id="@+id/player_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PLAYING"
-            android:textSize="20sp"
-            android:textColor="#fff"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -67,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:text="Title"
-            android:textSize="40sp"
+            android:textSize="25sp"
             android:textColor="@color/font_color"
             android:layout_centerHorizontal="true" />
         <TextView
@@ -77,7 +67,7 @@
             android:layout_below="@id/song_title"
             android:text="Artist"
             android:layout_alignParentStart="true"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="#EDEADE"
             android:layout_centerHorizontal="true"/>
 
@@ -96,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/player_details_layout"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="70dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
         <TextView
@@ -132,24 +122,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/seekbar_layout"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp">
 
         <ImageButton
-            android:id="@+id/id_shuffle"
+            android:id="@+id/btn_shuffle"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="45dp"
             android:layout_marginBottom="45dp"
-            android:layout_toStartOf="@+id/id_prev"
+            android:layout_toStartOf="@+id/btn_prev"
             android:background="@null"
             android:src="@drawable/shuffle_icon" />
 
         <ImageButton
-            android:id="@+id/id_prev"
+            android:id="@+id/btn_prev"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
@@ -159,18 +150,6 @@
             android:layout_toStartOf="@+id/play_pause"
             android:background="@null"
             android:src="@drawable/previous"/>
-
-        <ImageButton
-            android:id="@+id/play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="32dp"
-            android:background="@null"
-            android:contentDescription="Play or pause button"
-            android:src="@drawable/pause" />
 
         <ImageButton
             android:id="@+id/play_pause"
@@ -185,7 +164,7 @@
             android:src="@drawable/pause" />
 
         <ImageButton
-            android:id="@+id/id_next"
+            android:id="@+id/btn_next"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
@@ -197,7 +176,7 @@
             android:src="@drawable/next" />
 
         <ImageButton
-            android:id="@+id/id_repeat"
+            android:id="@+id/btn_repeat"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentEnd="true"
@@ -208,5 +187,4 @@
             android:background="@null"
             android:src="@drawable/repeat_icon" />
     </RelativeLayout>
-
 </RelativeLayout>

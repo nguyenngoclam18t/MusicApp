@@ -1,7 +1,18 @@
 package com.example.musicapp.Model;
 
+import java.util.List;
+
 public class UserModel {
     private String userUid,avatarUrl,fullName,email,mobile;
+    private List<String> favoritePlaylists;
+
+    public List<String> getFavoritePlaylists() {
+        return favoritePlaylists;
+    }
+
+    public void setFavoritePlaylists(List<String> favoritePlaylists) {
+        this.favoritePlaylists = favoritePlaylists;
+    }
 
     public UserModel(String userUid, String avatarUrl, String fullName, String email, String mobile) {
         this.userUid = userUid;

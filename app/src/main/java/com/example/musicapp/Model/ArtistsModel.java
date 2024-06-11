@@ -7,6 +7,9 @@ public class ArtistsModel {
     private String sortBiography;
     private String thumbnailLm;
 
+    public ArtistsModel() {
+    }
+
     public ArtistsModel(String artistId, String artistName, String artistAliasName, String sortBiography, String thumbnailLm) {
         this.artistId = artistId;
         this.artistName = artistName;

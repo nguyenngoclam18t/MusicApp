@@ -50,7 +50,7 @@ public class TopMusicHomePageAdapter extends RecyclerView.Adapter<TopMusicHomePa
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    songClick.onSongClick(songModel);
+                songClick.onSongClick(songModel);
             }
         });
     }
@@ -68,6 +68,7 @@ public class TopMusicHomePageAdapter extends RecyclerView.Adapter<TopMusicHomePa
             title=(TextView) itemView.findViewById(R.id.titleTopHomePage);
             desc=(TextView)itemView.findViewById(R.id.descTopHomePage);
             stt=(TextView)itemView.findViewById(R.id.sttTopHomePage);
+
         }
     }
 }
