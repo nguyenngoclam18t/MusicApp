@@ -264,5 +264,16 @@ public class ZingMp3Api {
         String response = requestZingMp3("/api/v2/video/get/streaming", qs);
         return gson.fromJson(response, JsonObject.class);
     }
+    public JsonObject getSongsInPlaylist(String playlistId, String page, String count) throws Exception {
+        Map<String, String> qs = new HashMap<>();
+        qs.put("id", playlistId);
+        qs.put("type", "playlist");
+        qs.put("page", page);
+        qs.put("count", count);
+        qs.put("sig", hashListMV("/api/v2/playlist/get/list", playlistId, "playlist", page, count));
+
+        String response = requestZingMp3("/api/v2/playlist/get/list", qs);
+        return gson.fromJson(response, JsonObject.class);
+    }
 
 }

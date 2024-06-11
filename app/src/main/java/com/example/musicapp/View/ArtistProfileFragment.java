@@ -165,9 +165,17 @@ public class ArtistProfileFragment extends Fragment implements OnAlbumClick {
     @Override
     public void OnAlbumClick(PlaylistModel album) {
         Bundle bundle = new Bundle();
-        bundle.putString("albumId", album.getPlaylistId());
-        TopSongFragment topSongFragment = new TopSongFragment();
-        topSongFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, topSongFragment).addToBackStack(null).commit();
+        bundle.putString("playlistId", album.getPlaylistId());
+        bundle.putString("playlistName", album.getPlaylistName());
+        bundle.putString("ThumbnailM", album.getThumbnailLm());
+        bundle.putString("sortDescription", album.getSortDescription());
+
+        AlbumDetailFragment albumDetailFragment = new AlbumDetailFragment();
+        albumDetailFragment.setArguments(bundle);
+
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.FrameHomePage, albumDetailFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

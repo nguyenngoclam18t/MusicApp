@@ -1,7 +1,6 @@
 package com.example.musicapp.Controller;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.Model.OnSongClick;
 import com.example.musicapp.R;
-import com.example.musicapp.View.PlayerActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
 
-    private ArrayList<SongModel> songList;
+    private List<SongModel> songList;
     private Context context;
     private OnSongClick onSongClick;
 
-    public SongAdapter(ArrayList<SongModel> songList, Context context, OnSongClick onSongClick) {
+    public SongAdapter(List<SongModel> songList, Context context, OnSongClick onSongClick) {
         this.songList = songList;
         this.context = context;
         this.onSongClick = onSongClick;
@@ -48,12 +46,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         } else {
             Picasso.get().load(R.drawable.img).into(holder.songImage);
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSongClick.onSongClick(song);
-            }
-        });
+        holder.itemView.setOnClickListener(v -> onSongClick.onSongClick(song));
     }
 
     @Override
@@ -61,8 +54,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         return songList.size();
     }
 
-    public void setOnClickListener(OnSongClick song) {
-        this.onSongClick = song;
+    public void setOnSongClickListener(OnSongClick onSongClick) {
+        this.onSongClick = onSongClick;
     }
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {

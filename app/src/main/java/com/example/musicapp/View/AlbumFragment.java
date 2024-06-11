@@ -121,9 +121,13 @@ public class AlbumFragment extends Fragment implements OnAlbumClick {
         bundle.putString("playlistName", album.getPlaylistName());
         bundle.putString("ThumbnailM", album.getThumbnailLm());
         bundle.putString("sortDescription", album.getSortDescription());
-        TopSongFragment topSongFragment = new TopSongFragment();
-        topSongFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, topSongFragment).addToBackStack(null).commit();
+
+        AlbumDetailFragment albumDetailFragment = new AlbumDetailFragment();
+        albumDetailFragment.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.FrameHomePage, albumDetailFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
-

@@ -124,6 +124,7 @@ public class TopSongFragment extends Fragment implements OnSongClick {
         if (getArguments() != null) {
             updateData(getArguments());
         }
+
         return view;
     }
 

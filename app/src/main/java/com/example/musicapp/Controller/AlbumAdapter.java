@@ -75,6 +75,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
                     onAlbumClick.OnAlbumClick(album);
                 }
             });
+
         }
+
     }
 }

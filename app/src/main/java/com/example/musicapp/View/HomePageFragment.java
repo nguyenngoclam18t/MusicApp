@@ -178,10 +178,7 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
 
         TopSongFragment topSongFragment = new TopSongFragment();
         topSongFragment.setArguments(bundle);
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.FrameHomePage, topSongFragment)
-                .addToBackStack(null)
-                .commit();
+        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, topSongFragment).addToBackStack(null).commit();
     }
 
 
