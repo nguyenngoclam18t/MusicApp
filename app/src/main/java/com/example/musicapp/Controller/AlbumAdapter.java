@@ -1,6 +1,5 @@
 package com.example.musicapp.Controller;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.musicapp.Model.AlbumModel;
+import com.example.musicapp.Model.OnAlbumClick;
+import com.example.musicapp.Model.PlaylistModel;
 import com.example.musicapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder> {
-    private List<AlbumModel> albumList;
 
-    public AlbumAdapter(List<AlbumModel> albumList) {
+    private List<PlaylistModel> albumList;
+    private OnAlbumClick onAlbumClick;
+
+    public AlbumAdapter(List<PlaylistModel> albumList, OnAlbumClick onAlbumClick) {
         this.albumList = albumList;
+        this.onAlbumClick = onAlbumClick;
     }
 
     @NonNull
@@ -32,8 +35,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
 
     @Override
     public void onBindViewHolder(@NonNull AlbumViewHolder holder, int position) {
-        AlbumModel album = albumList.get(position);
-        holder.bind(album);
+        PlaylistModel album = albumList.get(position);
+        holder.bind(album, onAlbumClick);
     }
 
     @Override
@@ -41,29 +44,39 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         return albumList.size();
     }
 
-    public class AlbumViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView albumTitle, artistName;
-        ImageView imgAlbum;
+    static class AlbumViewHolder extends RecyclerView.ViewHolder {
 
-        public AlbumViewHolder(View itemView) {
+        private ImageView albumThumbnail;
+        private TextView albumTitle;
+        private TextView albumDescription;
+
+        public AlbumViewHolder(@NonNull View itemView) {
             super(itemView);
+            albumThumbnail = itemView.findViewById(R.id.img_Album);
             albumTitle = itemView.findViewById(R.id.tvAlbumTitle);
-            imgAlbum = itemView.findViewById(R.id.img_Album);
-            itemView.setOnClickListener(this);
+            albumDescription = itemView.findViewById(R.id.albumDescription);
         }
 
-        public void bind(AlbumModel album) {
-            albumTitle.setText(album.getAlbumName());
-            Picasso.get().load(album.getImageUrl()).into(imgAlbum);
-        }
+        public void bind(PlaylistModel album, OnAlbumClick onAlbumClick) {
+            albumTitle.setText(album.getPlaylistName());
 
-        @Override
-        public void onClick(View v) {
-            int position = getAbsoluteAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                AlbumModel album = albumList.get(position);
-                Context context = itemView.getContext();
+            String description = album.getSortDescription();
+            if (description != null) {
+                albumDescription.setText(description);
+            } else {
+                albumDescription.setText("");
             }
+
+            Picasso.get().load(album.getThumbnailLm()).into(albumThumbnail);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAlbumClick.OnAlbumClick(album);
+                }
+            });
+
         }
+
     }
 }

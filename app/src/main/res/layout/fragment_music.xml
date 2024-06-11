@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Top Songs"
+            android:text="Bài hát nổi bật"
             android:textSize="24sp"
             android:textColor="@color/font_color"/>
     </LinearLayout>

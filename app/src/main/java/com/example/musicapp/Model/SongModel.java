@@ -1,25 +1,44 @@
 package com.example.musicapp.Model;
 
-public class SongModel {
+import java.io.Serializable;
+import java.util.List;
+
+public class SongModel implements Serializable {
     private String songId;
     private String title;
-    private String artistId;
-    private String albumId;
-    private String genreId;
-    private String imgUrl;
+    private String artistsNames;
+    private String thumbnailLm;
     private String songUrl;
 
-    public SongModel() {
-    }
+    private int duration;
 
-    public SongModel(String songId, String title, String artistId, String albumId, String genreId, String imgUrl, String songUrl) {
+    private static List<SongModel> allSongs;
+
+    public SongModel(String songId, String title, String artistsNames, String thumbnailLm, String songUrl, int duration) {
         this.songId = songId;
         this.title = title;
-        this.artistId = artistId;
-        this.albumId = albumId;
-        this.genreId = genreId;
-        this.imgUrl = imgUrl;
+        this.artistsNames = artistsNames;
+        this.thumbnailLm = thumbnailLm;
         this.songUrl = songUrl;
+        this.duration = duration;
+    }
+
+
+
+    public static void setAllSongs(List<SongModel> songs) {
+        allSongs = songs;
+    }
+
+    public static List<SongModel> getAllSongs() {
+        return allSongs;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getSongId() {
@@ -38,36 +57,20 @@ public class SongModel {
         this.title = title;
     }
 
-    public String getArtistId() {
-        return artistId;
+    public String getArtistsNames() {
+        return artistsNames;
     }
 
-    public void setArtistId(String artistId) {
-        this.artistId = artistId;
+    public void setArtistsNames(String artistsNames) {
+        this.artistsNames = artistsNames;
     }
 
-    public String getAlbumId() {
-        return albumId;
+    public String getThumbnailLm() {
+        return thumbnailLm;
     }
 
-    public void setAlbumId(String albumId) {
-        this.albumId = albumId;
-    }
-
-    public String getGenreId() {
-        return genreId;
-    }
-
-    public void setGenreId(String genreId) {
-        this.genreId = genreId;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setThumbnailLm(String thumbnailLm) {
+        this.thumbnailLm = thumbnailLm;
     }
 
     public String getSongUrl() {
@@ -76,5 +79,27 @@ public class SongModel {
 
     public void setSongUrl(String songUrl) {
         this.songUrl = songUrl;
+    }
+
+
+
+    public static SongModel getNextSong(SongModel currentSong) {
+        if (allSongs != null && !allSongs.isEmpty()) {
+            int currentIndex = allSongs.indexOf(currentSong);
+            if (currentIndex != -1 && currentIndex < allSongs.size() - 1) {
+                return allSongs.get(currentIndex + 1);
+            }
+        }
+        return null;
+    }
+
+    public static SongModel getPreviousSong(SongModel currentSong) {
+        if (allSongs != null && !allSongs.isEmpty()) {
+            int currentIndex = allSongs.indexOf(currentSong);
+            if (currentIndex > 0) {
+                return allSongs.get(currentIndex - 1);
+            }
+        }
+        return null;
     }
 }

@@ -11,36 +11,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.musicapp.Controller.FarvoriteSingerAdapter;
 import com.example.musicapp.Controller.NewsMusicAdapter;
-import com.example.musicapp.Controller.NewsTodayAdapter;
-import com.example.musicapp.Controller.TopMusicHomePageAdapter;
+import com.example.musicapp.Controller.AlbumHomePageAdapter;
+import com.example.musicapp.Model.PlaylistModel;
 import com.example.musicapp.Model.ArtistsModel;
-import com.example.musicapp.Model.FireStoreDB;
+import com.example.musicapp.Model.ApiCollectionHomePage;
+import com.example.musicapp.Model.OnAlbumClick;
 import com.example.musicapp.Model.OnArtistClick;
 import com.example.musicapp.Model.OnSongClick;
 import com.example.musicapp.Model.SongModel;
+import com.example.musicapp.Model.ZingMp3Api;
 import com.example.musicapp.R;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class HomePageFragment extends Fragment implements OnArtistClick, OnSongClick {
+public class HomePageFragment extends Fragment implements OnArtistClick, OnSongClick, OnAlbumClick {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     //my varible
-    RecyclerView recyclerViewNewsToday;
-    RecyclerView recyclerViewNewsMusic;
-    RecyclerView recyclerViewTopMusic;
-    RecyclerView recyclerViewFavoriteSinger;
+    RecyclerView recyclerViewNewsRelease;
+    RecyclerView recyclerViewChillPlayList;
+    RecyclerView recyclerViewSummerPlayList;
+    RecyclerView recyclerViewHotPlayList;
+    RecyclerView recyclerViewRemixPlayList;
+    LinearLayout suggestSingerLayout;
 
     ImageSlider imageSlider;
-
+    ZingMp3Api zingMp3Api=new ZingMp3Api();
     public HomePageFragment() {
         // Required empty public constructor
     }
@@ -53,62 +60,79 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
         return fragment;
     }
 
-    private void effectNewsToday() {
+    private void effectNewsRelease() {
+        ArrayList<SongModel> arrNewsSongs = new ArrayList<>(ApiCollectionHomePage.arrSongNewRelease.subList(0, Math.min(ApiCollectionHomePage.arrSongNewRelease.size(), 15)));
+        RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs, this);
+        recyclerViewNewsRelease.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewNewsRelease.setAdapter(adapterNewsMusic);
 
-        recyclerViewNewsToday.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        RecyclerView.Adapter adapterNewsToday;
-        adapterNewsToday = new NewsTodayAdapter(FireStoreDB.arrArtists, this);
-        recyclerViewNewsToday.setAdapter(adapterNewsToday);
 
     }
 
     private void effectSlider() {
         // slider
         ArrayList<SlideModel> arrSlider = new ArrayList<>();
-        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider1, ScaleTypes.CENTER_CROP));
-        arrSlider.add(new SlideModel(R.drawable.sample_slider2, ScaleTypes.CENTER_CROP));
+        for (String item: ApiCollectionHomePage.arrBanner) {
+            arrSlider.add(new SlideModel(item, ScaleTypes.CENTER_CROP));
+        }
         imageSlider.setImageList(arrSlider, ScaleTypes.CENTER_CROP);
     }
 
-    private void effectNewsMusic() {
-        ArrayList<SongModel> arrNewsSongs = new ArrayList<>(FireStoreDB.arrSong.subList(0, Math.min(FireStoreDB.arrSong.size(), 15)));
-        RecyclerView.Adapter adapterNewsMusic=new NewsMusicAdapter(arrNewsSongs, this);
-        recyclerViewNewsMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewNewsMusic.setAdapter(adapterNewsMusic);
+    private void effectPlayList( RecyclerView recycler, ArrayList<PlaylistModel> arrNewsSongs ) {
+        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        RecyclerView.Adapter adapterPlayList;
+        adapterPlayList = new AlbumHomePageAdapter(arrNewsSongs,this);
+        recycler.setAdapter(adapterPlayList);
     }
-
     private void effectSuggestSinger(View view){
-        ImageView img;
-        TextView nameSinger,descSinger;
-        img=(ImageView) view.findViewById(R.id.imgSuggestSingerHomepage);
-        nameSinger=(TextView) view.findViewById(R.id.nameSuggestSingerHomepage);
-        descSinger=(TextView) view.findViewById(R.id.descSuggestSingerHomepage);
-        Picasso.get()
-                .load(FireStoreDB.arrArtists.get(0).getAvatarUrl())
-                .into(img);
-        nameSinger.setText(FireStoreDB.arrArtists.get(0).getArtistName());
-        descSinger.setText("đây là 1 ca sĩ trẻ đầy  tài năng và mang đột phá trong gout âm nhạc của mình mong muốn cháy bỏng để phát triển bản thân.");
-    }
-    private  void effectTopHomePage(){
-        RecyclerView.Adapter adapterTop;
-        ArrayList<SongModel> arrTop = new ArrayList<>(FireStoreDB.arrSong.subList(0, Math.min(FireStoreDB.arrSong.size(), 5)));
-        adapterTop=new TopMusicHomePageAdapter(arrTop);
-        recyclerViewTopMusic.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerViewTopMusic.setAdapter(adapterTop);
-    }
-    private  void effectFavoriteSinger(){
-        RecyclerView.Adapter adapterFavoriteSinger;
-        adapterFavoriteSinger=new FarvoriteSingerAdapter(FireStoreDB.arrArtists, this);
-        recyclerViewFavoriteSinger.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewFavoriteSinger.setAdapter(adapterFavoriteSinger);
-    }
-    private void getArray(View view){
+        String[] artistArray = {"Huong-Ly", "Jombie", "Double2T", "Hoa-Minzy", "HIEUTHUHAI", "Son-Tung-M-TP"};
+        Random random = new Random();
+        int randomIndex = random.nextInt(artistArray.length);
+        String randomArtist = artistArray[randomIndex];
 
+        ImageView img = view.findViewById(R.id.imgSuggestSingerHomepage);
+        TextView nameSinger = view.findViewById(R.id.nameSuggestSingerHomepage);
+        TextView descSinger = view.findViewById(R.id.descSuggestSingerHomepage);
+        LinearLayout suggestSingerLayout = view.findViewById(R.id.suggestSingerLayout);
+
+        new Thread(() -> {
+            try {
+                JsonObject songData = zingMp3Api.getArtist(randomArtist);
+                JsonObject items = songData.getAsJsonObject("data");
+                String artistId = items.get("id").getAsString();
+                String artistName = items.get("name").getAsString();
+                String artistAliasName = items.get("alias").getAsString();
+                String sortBiography = items.get("sortBiography").getAsString();
+                String thumbnailLm = items.get("thumbnailM").getAsString();
+
+                ArtistsModel artistsModel = new ArtistsModel(artistId, artistName, artistAliasName, sortBiography, thumbnailLm);
+
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        Picasso.get()
+                                .load(artistsModel.getThumbnailLm())
+                                .into(img);
+                        nameSinger.setText(artistsModel.getArtistName());
+
+                        String shortBiography = artistsModel.getSortBiography();
+                        if (shortBiography.length() > 70) {
+                            shortBiography = shortBiography.substring(0, 70) + "...";
+                        }else if(shortBiography.isEmpty()){
+                            shortBiography="Nghệ Sĩ này chưa cập nhật mô tả về bản thân.";
+                        }
+                        descSinger.setText(shortBiography);
+
+                        suggestSingerLayout.setOnClickListener(v -> onArtistClick(artistsModel));
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -116,34 +140,58 @@ public class HomePageFragment extends Fragment implements OnArtistClick, OnSongC
 
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         imageSlider = (ImageSlider) view.findViewById(R.id.imgSliderHomePage);
-        recyclerViewNewsToday = (RecyclerView) view.findViewById(R.id.RecyclerViewNewsToday);
-        recyclerViewNewsMusic = (RecyclerView) view.findViewById(R.id.RecyclerViewNewsMusic);
-        recyclerViewTopMusic = (RecyclerView) view.findViewById(R.id.RecyclerViewTopMusic);
-        recyclerViewFavoriteSinger=(RecyclerView) view.findViewById(R.id.RecyclerViewFarvoriteSinger);
-        getArray(view);
+        recyclerViewNewsRelease = (RecyclerView) view.findViewById(R.id.recyclerViewNewsRelease);
+        recyclerViewChillPlayList = (RecyclerView) view.findViewById(R.id.RecyclerViewChillPlayList);
+        recyclerViewSummerPlayList = (RecyclerView) view.findViewById(R.id.RecyclerViewSummerPlayList);
+        recyclerViewRemixPlayList = (RecyclerView) view.findViewById(R.id.RecyclerViewRemixPlayList);
+        recyclerViewHotPlayList = (RecyclerView) view.findViewById(R.id.RecyclerViewHotPlayList);
+
         effectSlider();
-        effectNewsMusic();
-        effectTopHomePage();
+        effectNewsRelease();
+        effectPlayList(recyclerViewChillPlayList,ApiCollectionHomePage.arrPlaylistChill);
+        effectPlayList(recyclerViewSummerPlayList,ApiCollectionHomePage.arrPlaylistSummer);
+        effectPlayList(recyclerViewRemixPlayList,ApiCollectionHomePage.arrPlaylistRemix);
+        effectPlayList(recyclerViewHotPlayList,ApiCollectionHomePage.arrPlaylistHot);
         effectSuggestSinger(view);
-        effectFavoriteSinger();
-        effectNewsToday();
         return view;
     }
 
     @Override
     public void onSongClick(SongModel song) {
         Intent intent = new Intent(getContext(), PlayerActivity.class);
-        intent.putExtra("songId", song.getSongId());
+        intent.putExtra("encodeId", song.getSongId());
+        intent.putExtra("title", song.getTitle());
+        intent.putExtra("thumbnailM", song.getThumbnailLm());
+        intent.putExtra("artistsNames", song.getArtistsNames());
+        intent.putExtra("link", song.getSongUrl());
+        intent.putExtra("duration", song.getDuration());
         startActivity(intent);
     }
 
-    public void onArtistClick(ArtistsModel artists) {
+    @Override
+    public void OnAlbumClick(PlaylistModel album) {
         Bundle bundle = new Bundle();
-        bundle.putString("artistId", artists.getArtistId());
-        bundle.putString("artistName", artists.getArtistName());
-        bundle.putString("avatarUrl", artists.getAvatarUrl());
-        ArtistProfileFragment artistProfileFragment = new ArtistProfileFragment();
-        artistProfileFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, artistProfileFragment).addToBackStack(null).commit();
+        bundle.putString("albumId", album.getPlaylistId());
+        bundle.putString("albumTitle", album.getPlaylistName());
+        bundle.putString("albumThumbnail", album.getThumbnailLm());
+        bundle.putString("albumDescription", album.getSortDescription());
+
+        TopSongFragment topSongFragment = new TopSongFragment();
+        topSongFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, topSongFragment).addToBackStack(null).commit();
     }
+
+
+    @Override
+    public void onArtistClick(ArtistsModel artist) {
+        Bundle bundle = new Bundle();
+        bundle.putString("artistId", artist.getArtistId());
+        bundle.putString("alias", artist.getArtistAliasName());
+        bundle.putString("artistName", artist.getArtistName());
+        bundle.putString("thumbnailLm", artist.getThumbnailLm());
+        ArtistProfileFragment fragment = new ArtistProfileFragment();
+        fragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.FrameHomePage, fragment).addToBackStack(null).commit();
+    }
+
 }

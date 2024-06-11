@@ -4,9 +4,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_bg"
     tools:context=".View.AlbumFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView1"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:text="Playlist dựa trên nghệ sĩ"
+        android:textSize="24sp"
+        android:textColor="@color/font_color"
+        android:id="@+id/playlist"
+        android:layout_marginLeft="10dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/playlist"/>
 </RelativeLayout>

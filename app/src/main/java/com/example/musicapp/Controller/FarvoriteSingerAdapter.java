@@ -43,13 +43,11 @@ public class FarvoriteSingerAdapter extends RecyclerView.Adapter<FarvoriteSinger
 
     @Override
     public void onBindViewHolder(@NonNull FarvoriteSingerAdapter.ViewHolder holder, int position) {
-
+        ArtistsModel artistsModel=arr.get(position);
         Picasso.get()
-                .load(arr.get(position).getAvatarUrl())
+                .load(artistsModel.getThumbnailLm())
                 .into(holder.img);
-        holder.title.setText(arr.get(position).getArtistName());
-
-        ArtistsModel artistsModel = arr.get(position);
+        holder.title.setText(artistsModel.getArtistName());
         holder.bind(artistsModel);
     }
 
@@ -76,9 +74,9 @@ public class FarvoriteSingerAdapter extends RecyclerView.Adapter<FarvoriteSinger
 
                     if (context instanceof FragmentActivity) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("artistId", artist.getArtistId());
-                        bundle.putString("artistName", artist.getArtistName());
-                        bundle.putString("avatarUrl", artist.getAvatarUrl());
+//                        bundle.putString("artistId", artist.getArtistId());
+//                        bundle.putString("artistName", artist.getArtistName());
+//                        bundle.putString("avatarUrl", artist.getAvatarUrl());
 
                         ArtistProfileFragment artistProfileFragment = new ArtistProfileFragment();
                         artistProfileFragment.setArguments(bundle);

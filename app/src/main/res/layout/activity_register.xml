@@ -25,23 +25,10 @@
         android:layout_marginTop="5dp"
         android:text="Create a new account" />
 
-    <EditText
-        android:id="@+id/fullnameET"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/round_back_dark_blue5_15"
-        android:hint="Fullname"
-        android:inputType="text"
-        android:maxLines="1"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/emailET"
+
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginStart="20dp"
@@ -55,20 +42,7 @@
         android:paddingEnd="20dp"
         android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/mobileET"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/round_back_dark_blue5_15"
-        android:hint="Mobile"
-        android:inputType="phone"
-        android:maxLines="1"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:textSize="16sp" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -96,8 +70,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="7dp"
             android:adjustViewBounds="true"
             android:padding="10dp"
             android:src="@drawable/password_show" />
@@ -108,7 +83,6 @@
         android:layout_height="55dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
         android:background="@drawable/round_back_dark_blue5_15">
 
         <EditText
@@ -135,7 +109,34 @@
             android:padding="10dp"
             android:src="@drawable/password_show" />
     </RelativeLayout>
-
+    <EditText
+        android:id="@+id/mobileET"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/round_back_dark_blue5_15"
+        android:hint="Mobile"
+        android:inputType="phone"
+        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textSize="16sp" />
+    <EditText
+        android:id="@+id/fullnameET"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/round_back_dark_blue5_15"
+        android:hint="Fullname"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textSize="16sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signUpBtn"
