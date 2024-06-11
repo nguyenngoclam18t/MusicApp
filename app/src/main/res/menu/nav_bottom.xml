@@ -12,7 +12,7 @@
         />
     <item
         android:id="@+id/navigation_Search"
-        android:icon="@drawable/search"
+        android:icon="@drawable/searchbaricon"
         android:title="Tìm kiếm"
         />
     <item
