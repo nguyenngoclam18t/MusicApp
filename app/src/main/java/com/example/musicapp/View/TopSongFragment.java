@@ -91,8 +91,7 @@ public class TopSongFragment extends Fragment implements OnSongClick {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                     String dateString = sdf.format(date);
                     int duration = itemObj.get("duration").getAsInt();
-
-                    arrTop.add(new SongModel(encodeId, title, artistsNames, dateString, thumbnailM, duration));
+                    arrTop.add(new SongModel(encodeId, title, artistsNames,  thumbnailM,"", duration));
                 }
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(() -> {

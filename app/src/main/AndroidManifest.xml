@@ -24,7 +24,7 @@
             android:name=".View.Register"
             android:exported="false" />
         <activity
-            android:name=".View.Login"
+            android:name=".View.LoadingScreen"
             android:exported="false" />
         <activity
             android:name=".View.PlayerActivity"
@@ -33,7 +33,7 @@
             android:name=".View.Nav_Bar_Menu"
             android:exported="false" />
         <activity
-            android:name=".View.LoadingScreen"
+            android:name=".View.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

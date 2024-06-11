@@ -9,7 +9,6 @@ public class SongModel implements Serializable {
     private String artistsNames;
     private String thumbnailLm;
     private String songUrl;
-
     private int duration;
 
     private static List<SongModel> allSongs;
