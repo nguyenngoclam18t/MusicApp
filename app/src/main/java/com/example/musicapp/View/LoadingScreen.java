@@ -54,8 +54,9 @@ public class LoadingScreen extends AppCompatActivity  {
             try {
                 DataProfilePage.userModel.setUserUid(FirebaseAuthencation.mAuth.getUid());
                 if( !DataProfilePage.userModel.getUserUid().equals("DQLhmdBam4hOn7PrNJAnvQ2QfuK2")){
-                    GetInforUser();
+
                     JsonObject songData = zingMp3Api.getHome();
+                    GetInforUser();
                     JsonObject itemsarr = songData.getAsJsonObject("data");
                     JsonArray data = itemsarr.getAsJsonArray("items");
                     getBanner((JsonObject) data.get(0));

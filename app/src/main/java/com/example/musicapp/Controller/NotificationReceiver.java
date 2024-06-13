@@ -10,17 +10,17 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action != null) {
-            PlayerActivity playerActivity = PlayerActivity.instance;
-            if (playerActivity != null){
-                if (action.equals("previous")) {
-                    //playerActivity.playPreviousSong();
-                } else if (action.equals("play")) {
-//                    playerActivity.play();
-                } else if (action.equals("next")) {
-                    //playerActivity.playNextSong();
-                }
-            }
-        }
+//        if (action != null) {
+////            PlayerActivity playerActivity = PlayerActivity.instance;
+//            if (playerActivity != null){
+//                if (action.equals("previous")) {
+//                    //playerActivity.playPreviousSong();
+//                } else if (action.equals("play")) {
+////                    playerActivity.play();
+//                } else if (action.equals("next")) {
+//                    //playerActivity.playNextSong();
+//                }
+//            }
+//        }
     }
 }

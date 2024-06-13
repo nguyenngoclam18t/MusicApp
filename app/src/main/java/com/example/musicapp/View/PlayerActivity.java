@@ -13,21 +13,16 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.media.AudioAttributes;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.ResultReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
@@ -39,25 +34,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.musicapp.Controller.NotificationReceiver;
-import com.example.musicapp.Model.ApiCollectionHomePage;
-import com.example.musicapp.Model.DataProfilePage;
 import com.example.musicapp.Model.SongModel;
 import com.example.musicapp.Model.ZingMp3Api;
 import com.example.musicapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,8 +66,6 @@ public class PlayerActivity extends AppCompatActivity {
     private ExecutorService executorService;
     private SongModel currentSong;
     private MediaSessionCompat mediaSession;
-    public static PlayerActivity instance;
-    private  Context context;
     private static final String TAG = "PlayerActivity";
 
     private List<SongModel> songsList;
@@ -110,12 +92,13 @@ public class PlayerActivity extends AppCompatActivity {
             songList.add(currentSong);
 
             updateUI(currentSong);
-            getSongUrl(encodeId);
+            getSongUrl(encodeId, () -> playSong(currentSong.getSongUrl()));
         } else {
             Toast.makeText(this, "Không có bài hát được chọn", Toast.LENGTH_SHORT).show();
             finish();
         }
-        getListSong(100);
+
+        loadSongsByPlaylist("Z6CZO0F6");
     }
 
     private void initViews() {
@@ -185,9 +168,17 @@ public class PlayerActivity extends AppCompatActivity {
                 btnRepeat.setImageResource(R.drawable.repeat_icon_white);
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
+            }
+        });
     }
-    private void getSongUrl(String encodeId) {
-        Log.d(TAG, "Loading song URL for encodeId: " + encodeId);
+
+    private void getSongUrl(String encodeId, Runnable onSongUrlFetched) {
         executorService.execute(() -> {
             try {
                 JsonObject songJson = zingMp3Api.getSong(encodeId);
@@ -197,62 +188,116 @@ public class PlayerActivity extends AppCompatActivity {
                         String songUrl = dataObject.get("128").getAsString();
                         runOnUiThread(() -> {
                             currentSong.setSongUrl(songUrl);
-                            playSong(songUrl);
+                            if (onSongUrlFetched != null) {
+                                onSongUrlFetched.run();
+                            }
                         });
                     } else {
+                        Log.e(TAG, "Khong tim thay link bai hat");
                     }
                 } else {
+                    Log.e(TAG, "Khong tim thay du lieu bai hat");
                 }
             } catch (Exception e) {
-            }
-        });
-    }
-    private void getListSong(int limit) {
-        executorService.execute(() -> {
-            try {
-                JsonObject songData = zingMp3Api.getHome();
-                Log.d(TAG, "Dữ liệu bài hát: " + songData.toString());
-                if (songData != null) {
-                    JsonObject itemsObj = songData.getAsJsonObject("data");
-                    if (itemsObj != null && itemsObj.has("items")) {
-                        JsonArray itemsArray = itemsObj.getAsJsonArray("items");
-                        addToPlaylist(itemsArray);
-                        Log.d(TAG, "Số lượng bài hát đã được thêm vào songList: " + songList.size());
-                        if (songList.isEmpty()) {
-                            runOnUiThread(() -> Toast.makeText(this, "Không có bài hát nào được tìm thấy", Toast.LENGTH_SHORT).show());
-                        }
-                    } else {
-                        Log.d(TAG, "Không có dữ liệu bài hát");
-                    }
-                } else {
-                    Log.d(TAG, "Dữ liệu bài hát rỗng");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(TAG, "Lỗi khi lấy danh sách bài hát", e);
+                Log.e(TAG, "Loi khi lay link bai hat", e);
             }
         });
     }
 
-    private void addToPlaylist(JsonArray itemsArray) {
-        for (JsonElement itemElement : itemsArray) {
-            JsonObject item = itemElement.getAsJsonObject();
-            if (item.has("items")) {
-                JsonObject sectionItems = item.getAsJsonObject("items");
-                if (sectionItems.has("all")) {
-                    JsonArray allSongs = sectionItems.getAsJsonArray("all");
-                    for (JsonElement songElement : allSongs) {
-                        JsonObject song = songElement.getAsJsonObject();
-                        String title = song.get("title").getAsString();
-                        String artist = song.getAsJsonArray("artistsNames").get(0).getAsString();
-                        String encodeId = song.get("encodeId").getAsString();
-                        String thumbnailM = song.get("thumbnailM").getAsString();
-                        int duration = song.get("duration").getAsInt();
-                        SongModel songModel = new SongModel(encodeId, title, artist, thumbnailM, "", duration);
-                        songList.add(songModel);
+    private void loadSongsByPlaylist(String playlistId) {
+        executorService.execute(() -> {
+            try {
+                JsonObject playlistData = zingMp3Api.getDetailPlaylist(playlistId);
+                if (playlistData != null && playlistData.has("data")) {
+                    JsonObject data = playlistData.getAsJsonObject("data");
+                    JsonArray songArray = data.getAsJsonObject("song").getAsJsonArray("items");
+
+                    List<SongModel> songs = new ArrayList<>();
+                    for (JsonElement element : songArray) {
+                        JsonObject songObj = element.getAsJsonObject();
+                        String encodeId = songObj.get("encodeId").getAsString();
+                        String titleSong = songObj.get("title").getAsString();
+                        String thumbnailSong = songObj.get("thumbnailM").getAsString();
+                        String artistsNames = songObj.get("artistsNames").getAsString();
+                        int duration = songObj.get("duration").getAsInt();
+                        songs.add(new SongModel(encodeId, titleSong, artistsNames, thumbnailSong, "", duration));
                     }
+                    runOnUiThread(() -> updateSongList(songs));
+                } else {
+                    Log.e(TAG, "Không tìm thấy dữ liệu playlistId: " + playlistId);
                 }
+            } catch (Exception e) {
+                Log.e(TAG, "lỗi load playlist", e);
             }
+        });
+    }
+
+    private void updateSongList(List<SongModel> songs) {
+        this.songsList = songs;
+    }
+
+    private void playSong(String songUrl) {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+        } else {
+            mediaPlayer = new MediaPlayer();
+        }
+
+        try {
+            mediaPlayer.setDataSource(songUrl);
+            mediaPlayer.prepareAsync();
+            mediaPlayer.setOnPreparedListener(mp -> {
+                seekBar.setMax(mp.getDuration() / 1000);
+                play();
+            });
+            mediaPlayer.setOnCompletionListener(mp -> playNextSong());
+        } catch (IOException e) {
+            Log.e(TAG, "Error playing song", e);
+        }
+    }
+
+    private void play() {
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                btnPlay.setImageResource(R.drawable.play);
+            } else {
+                mediaPlayer.start();
+                btnPlay.setImageResource(R.drawable.pause);
+                handler.post(this::updateSeekBar);
+            }
+        } else {
+            playSong(currentSong.getSongUrl());
+        }
+    }
+
+
+    private void playNextSong() {
+        if (songsList != null && !songsList.isEmpty()) {
+            if (isShuffle) {
+                currentSongIndex = new Random().nextInt(songsList.size());
+            } else {
+                currentSongIndex = (currentSongIndex + 1) % songsList.size();
+            }
+            SongModel nextSong = songsList.get(currentSongIndex);
+            currentSong = nextSong;
+            updateUI(nextSong);
+            getSongUrl(nextSong.getSongId(), () -> playSong(nextSong.getSongUrl()));
+        }
+    }
+
+    private void playPreviousSong() {
+        if (songsList != null && !songsList.isEmpty()) {
+            if (isShuffle) {
+                currentSongIndex = new Random().nextInt(songsList.size());
+            } else {
+                currentSongIndex = (currentSongIndex - 1 + songsList.size()) % songsList.size();
+            }
+            SongModel prevSong = songsList.get(currentSongIndex);
+            currentSong = prevSong;
+            updateUI(prevSong);
+            getSongUrl(prevSong.getSongId(), () -> playSong(prevSong.getSongUrl()));
         }
     }
 
@@ -263,79 +308,13 @@ public class PlayerActivity extends AppCompatActivity {
         durationTotal.setText(getDuration(song.getDuration()));
     }
 
-    public void play() {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            btnPlay.setImageResource(R.drawable.play);
-        } else {
-            if (mediaPlayer != null) {
-                mediaPlayer.start();
-                btnPlay.setImageResource(R.drawable.pause);
-            }
-        }
+
+    private String formatTime(int duration) {
+        int minutes = duration / 60;
+        int seconds = duration % 60;
+        return String.format("%02d:%02d", minutes, seconds);
     }
 
-    private void playSong(String songUrl) {
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-
-        try {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(songUrl);
-            mediaPlayer.setOnPreparedListener(mp -> {
-                mp.start();
-                updateSeekBar();
-            });
-            mediaPlayer.setOnCompletionListener(mp -> {
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-                playNextSong();
-            });
-            mediaPlayer.prepareAsync();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Lỗi khi phát nhạc", Toast.LENGTH_SHORT).show();
-        }
-
-        createNotification();
-    }
-
-
-    private void playNextSong() {
-        if (songsList != null && !songsList.isEmpty()) {
-            currentSongIndex++;
-            if (currentSongIndex >= songsList.size()) {
-                currentSongIndex = 0;
-            }
-            SongModel nextSong = songsList.get(currentSongIndex);
-            String songUrl = nextSong.getSongUrl();
-            playSong(songUrl);
-        } else {
-            // Handle the case where the list is empty
-            Toast.makeText(this, "Không có bài hát để phát tiếp", Toast.LENGTH_SHORT).show();
-            Log.e("PlayerActivity", "Danh sách bài hát trống.");
-        }
-    }
-
-    private void playPreviousSong() {
-        if (songList != null && !songList.isEmpty()) {
-            currentSongIndex--;
-            if (currentSongIndex < 0) {
-                currentSongIndex = songList.size() - 1;
-            }
-            SongModel currentSong = songList.get(currentSongIndex);
-            updateUI(currentSong);
-            getSongUrl(currentSong.getSongId());
-        } else {
-
-            Toast.makeText(this, "Không có bài hát để phát", Toast.LENGTH_SHORT).show();
-            Log.e("PlayerActivity", "Danh sách bài hát trống.");
-        }
-    }
 
     private void updateSeekBar() {
         if (mediaPlayer != null) {
@@ -471,7 +450,6 @@ public class PlayerActivity extends AppCompatActivity {
                     });
 
         } else {
-            // Handle case where mediaSession is null or inactive
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.cancel(NOTIFICATION_ID);
         }
